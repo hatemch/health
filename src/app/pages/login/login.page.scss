@@ -1,0 +1,52 @@
+ion-header{
+
+    --ion-background-color:#589191 ;
+    
+}
+
+
+/* ion-content {
+    --background: url('../../../assets/imgs/fondo.png') no-repeat 100% 100%;
+} */
+
+.title {
+    font-family: Comic Sans MS;
+    font-size: 42px;
+    color: #589191;
+    }
+
+ion-title{
+    color: rgb(253, 253, 253);
+    
+}
+
+.ent_but{
+    --background:  #7CBBBA;
+}
+
+.cr_but{
+    --background: rgb(29, 107, 131);
+}
+
+ion-input {
+    //font-size:1.2rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    border: 0.55px solid rgba(121, 121, 121, 0.4) !important;
+    border-radius: 5px;
+    //--placeholder-color: black;
+    //--placeholder-opacity: 1 !important;
+    //--opacity: 1 !important;
+    //opacity: 1 !important;
+    --padding-top: 0.7rem;
+    --padding-bottom: 0.7rem;
+    --padding-start: 0.6rem;
+  }
+
+  .at_but{
+    --background:  #7CBBBA;
+   
+    --border-radius: 12px;
+    width: 90%;
+
+}

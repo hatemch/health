@@ -1,0 +1,37 @@
+<ion-split-pane>
+  <ion-menu contentId="content">
+ 
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Opções de Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let MenuItems of SideMenu">
+          <ion-item routerDirection="root" [class.active-item]="selectedPath.startsWith(MenuItems.Route)" (click)="itemSelected(MenuItems)">
+            <ion-icon color="primary" name="{{ MenuItems.Icon }}"></ion-icon>
+            <ion-label>
+              {{ MenuItems.Name }}
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-item (click)="logout()"><!-- tappable routerLink="/login" routerDirection="root"-->
+          <ion-icon color="primary" name="log-out"></ion-icon>
+          <ion-label>Sair</ion-label>
+        </ion-item>
+      </ion-list>
+
+
+
+    </ion-content>
+    <ion-footer class="ion-padding" class="ion-text-center">
+      {{AppVersion}}
+    </ion-footer>
+ 
+  </ion-menu>
+ 
+  <ion-router-outlet id="content" main></ion-router-outlet>
+ 
+</ion-split-pane>

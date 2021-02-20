@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Compromissos cumpridos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #form="ngForm" method="post">
+    <div *ngFor="let sa of a; let i =index ">
+      <ion-card class="card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+
+                  {{sa.Nome}} {{sa.Sobrenome}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div>
+
+            <ion-grid>
+              <ion-row >
+                <ion-col id="{{sa.code}}">
+
+
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>Espacialidade:</ion-label>
+                    {{sa.Especialidades}}
+                  </ion-item>
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>Hospital:</ion-label>
+                    {{sa.Hospitais}}
+                  </ion-item>
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>Data:</ion-label>
+                    {{sa.DataDoAtendimento}}
+                  </ion-item>
+
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Sexo:</ion-label>
+                    {{sa.Sexo}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>CPF:</ion-label>
+                    {{sa.CPF}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Doutor:</ion-label>
+                    {{sa.Doutor}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Descrição:</ion-label>
+                    {{sa.desc}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Sintomas:</ion-label>
+                    {{sa.sintomas}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Diagnosticos:</ion-label>
+                    {{sa.diagno}}
+                  </ion-item>
+
+                  <div class="expand-arrow-container" (click)="expandFazenda()">
+                    <ion-icon name="ios-arrow-dropdown-circle" *ngIf="ishidden"></ion-icon>
+                    <ion-icon name="ios-arrow-dropup-circle" *ngIf="!ishidden"></ion-icon>
+                  </div>
+
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+  </form>
+</ion-content>
+
+
+<!--<ion-button type="submit"  (click)="delete(sa.code)"   expand="full" class="at_but">delete</ion-button>-->

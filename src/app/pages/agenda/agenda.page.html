@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-button (click)="goBack()">
+              <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-text-center">
+    <ion-button  size="default" (click)="goConsultaCompromisso()" class="but1">
+      Consulte as nomeações
+      <ion-icon slot="start" name="search" class="icon"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="ion-text-center">
+      <ion-button  (click)="goNovoCompromisso()" class="but2">
+        Novo compromisso
+        <ion-icon slot="start" name="add" class="icon"></ion-icon>
+      </ion-button>
+  </div>
+  <div class="ion-text-center">
+      <ion-button  (click)="goCumpridos()" class="but3">
+        Compromissos Cumpridos
+        <ion-icon slot="start" name="md-checkmark-circle-outline" class="icon"></ion-icon>
+      </ion-button>
+  </div>
+  <div class="ion-text-center">
+      <ion-button  (click)="goNaoCumpridos()" class="but4">
+        Compromissos Não Cumpridos
+        <ion-icon slot="start" name="md-clock" class="icon"></ion-icon>
+      </ion-button>
+  </div>
+  <div class="ion-text-center">
+      <ion-button  (click)="goCancelados()" class="but5">
+        Compromissos Cancelados
+        <ion-icon slot="start" name="md-close-circle" class="icon"></ion-icon>
+      </ion-button>
+  </div>
+</ion-content>

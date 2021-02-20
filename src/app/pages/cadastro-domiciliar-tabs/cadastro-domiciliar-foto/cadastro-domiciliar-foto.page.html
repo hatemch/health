@@ -1,0 +1,57 @@
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-card *ngIf="foto.length>0" class="ion-margin-bottom">
+        <ion-grid *ngIf="imageFileBase64" >
+          <ion-row >
+            <ion-col *ngFor="let photo of foto; index as position"size =6>
+              <img  name="imageCroqui" #imgresult [src]="photo">
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col >
+              <ion-button (click)="salvarImagemWebVersion()">Salvar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <input #inputcamera class="inputUpload" type="file" accept="image/*" capture="camera" [hidden]=true />
+
+    </ion-col>
+  </ion-row>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button *ngIf="!showWebVersion" color="light" (click)="openGallery()" data-desc="Galeria" >
+        <ion-icon ios="ios-image" md="md-image"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!showWebVersion" color="light" (click)="openCamera()" data-desc="Câmera">
+        <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="showWebVersion" color="light" (click)="seleccionarImagen()" data-desc="mostrar galeria">
+        <ion-icon ios="ios-image" md="md-image"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+  <!-- #################### Listagem da informação ##################### -->
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let item of fotos; index as position">
+          <ion-img src="{{ item.foto_url }}" (click)="mostrarImagen(item)"></ion-img>
+
+        </ion-col>
+        <ion-col *ngIf="fotos?.length === 0">
+          <ion-label class="ion-text-center">
+            Nenhum informação para mostrar
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

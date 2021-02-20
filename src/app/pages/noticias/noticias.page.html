@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab  *ngIf="flagForm == false" horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="novaNoticia()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!-- #################### Listagem da informação ##################### -->
+  <div *ngIf="flagForm == false" class="ion-padding">
+
+    <ion-list>
+
+      <ion-list-header color="light">
+        <ion-label>{{ subtitle }}</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let item of collectionFilter">
+        <ion-label>
+          <h3>{{ item.nome }}</h3>
+          <p>Data do evento: {{ item.data_evento }}</p>
+          <p>Link do evento:  <a (click)="openUrl(item.link)">{{item.link}}</a></p>
+          <p>Descrição: {{item.descricao}}</p>
+        </ion-label>
+
+        <ion-buttons>
+          <ion-button (click)="delete(item)" [disabled]="permissoes.Deletar == 0" slot="end" fill="clear" shape="round">
+            <ion-icon name="trash" color="secondary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-item>
+
+      <ion-item *ngIf="collectionFilter?.length === 0">
+        <ion-label class="ion-text-center">
+          Nenhum informação para mostrar
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!--div *ngFor="let noticia of noticias; let i =index ">
+          <ion-card class="card">
+            <ion-card-header>
+              <ion-card-title>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      {{noticia.nome}}
+                    </ion-col>
+                    <ion-col>
+                      <ion-icon name="ios-trash" type="submit" (click)="cancelar(noticia.codigo)" class="trash"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content >
+              <div >
+                <ion-grid>
+                  <ion-row>
+                    <ion-col id="{{noticia.nome}}">
+
+                      <ion-item class="roww" lines="none">
+                        <ion-label>Data do evento:</ion-label>
+                        {{noticia.data_evento}}
+                      </ion-item>
+
+                      <ion-item class="roww" lines="none">
+                        <ion-label>Link do evento:</ion-label>
+                      </ion-item>
+
+                      <ion-item class="roww" lines="none">
+                        <a (click)="openUrl(noticia.link)">{{noticia.link}}</a>
+                      </ion-item>
+
+                      <ion-item class="roww" lines="none">
+                        <ion-label>Descrição:</ion-label>
+                        {{noticia.descricao}}
+                      </ion-item>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </form>
+  </div-->
+
+  <!-- #################### Formulario ##################### -->
+  <div *ngIf="flagForm" class="ion-padding">
+      <form #form="ngForm" (ngSubmit)="salvar(form);" method="post" name="frmNoticias">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+              <ion-item>
+                <ion-label position="floating">Nome:</ion-label>
+                <ion-input type="text" [(ngModel)]="model.nome" placeholder="Nome do evento" name="nome" required> </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+              <ion-item>
+                <ion-label position="floating">Data do evento:</ion-label>
+                <ion-datetime ngModel type="text" doneText='OK' cancelText='CANCELAR' displayFormat="DD/MM/YYYY"
+                    placeholder="DD/MM/AAAA " [(ngModel)]="model.data_evento" name="data_evento" required ></ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+              <ion-item>
+                <ion-label position="floating">Link do evento:</ion-label>
+                <ion-input ngModel type="text" [(ngModel)]="model.link" placeholder="Link do evento" name="link" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+              <ion-item>
+                <ion-label position="floating">Descrição do evento:</ion-label>
+                <ion-input ngModel type="text" [(ngModel)]="model.descricao" placeholder="Descrição do evento" name="descricao" required ></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+              <ion-button type="submit" [disabled]="!form.valid" expand="block" class="button-success">Criar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+  </div>
+</ion-content>
+

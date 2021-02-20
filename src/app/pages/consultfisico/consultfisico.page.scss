@@ -1,0 +1,120 @@
+ion-header{
+
+    --ion-background-color:#589191;
+    
+}
+
+ion-title{
+    color: rgb(253, 253, 253);
+    
+}
+
+
+.card { 
+    background:  rgb(211, 212, 212);
+
+}
+.sc-ion-card-md-h {
+    --background: var(--ion-item-background,transparent);
+    --color: var(--ion-color-step-550,#737373);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+.roww{
+    --background:  rgb(211, 212, 212);
+}
+
+
+
+
+
+.trash{
+    position: absolute;
+    right: 0%; 
+}
+.build{
+    position: absolute;
+    right: 10%; 
+}
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.expand-arrow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ion-icon {
+      font-size: 44px;
+    }
+  }
+
+  .circle {
+    background:  rgb(29, 107, 131);
+    width: 50px;
+    height: 50px;
+
+    border-radius: 100%;
+    position: absolute;
+    right: 5%;
+    /* left:40%;
+    top: 200px;
+    right: 30%; */
+    margin-left: 300px;
+    //margin-right: 0px;
+    margin-top: 70px;
+    margin-bottom: 20px;
+   
+}
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 61%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    display: block;
+
+}
+
+
+
+
+/* .trTable th
+{   
+    background: rgb(131, 193, 221);
+    font-size: 0.8rem;
+    border: thin solid #f5f5f2;
+    width: 180px;
+ 
+}
+
+.trTable td
+{
+
+    font-size: 0.8rem;
+    border: thin solid #f5f5f2;
+    width: 80%;
+}
+
+.table
+{    right: 5%;
+    left: 0.5%;
+    position:relative;
+    top: 100px;
+    width: 100%;
+}
+
+.table td{
+    background: rgb(204, 206, 193);
+    font-size: 0.8rem;
+    border: thin solid #f5f5f2;
+    width: 180px;
+    height:3cm;
+} */

@@ -1,0 +1,56 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+.custom-loader-class{
+    --background:#F4B004;
+    --spinner-color:#F94701;
+}
+
+ion-header{
+    --ion-background-color:#589191;
+}
+
+ion-title{
+    color: rgb(253, 253, 253);
+    font-size: 18px;
+}
+ion-fab-button {
+    --background: #589191;
+}
+ion-tab-bar{
+    --background: #7CBBBA;
+}
+ion-tab-button{
+    --color-selected: rgb(253, 253, 253);
+}
+ion-card-header{
+     --background: #589191;
+}
+
+ion-fab-button[data-desc] {
+    position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+    position: absolute;
+    content: attr(data-desc);
+    z-index: 1;
+    right: 70px;
+    bottom: 7px;
+    background-color: var(--ion-color-light);
+    padding: 9px;
+    border-radius: 5px;
+    color: darkgrey;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.05), 0 6px 10px 0 rgba(0,0,0,0.06), 0 1px 18px 0 rgba(0,0,0,0.04);
+}
+
+@import '~ionic-selectable/esm5/ionic-selectable.component.min.css';

@@ -1,0 +1,1155 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="goBack()">
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons  *ngIf="ShowFotos == true" slot="end">
+            <ion-button (click)="gotoMarcadoresFotos()">
+                <ion-icon slot="icon-only" ios="ios-images" md="md-images">
+                </ion-icon>
+            </ion-button>
+            
+
+        </ion-buttons>
+        <ion-title>{{title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form #form="ngForm" (ngSubmit)="save(form)" method="post">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    DADOS BÁSICOS
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Latitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.latitude" name="latitude" disabled></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="floating">Longitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.longitude" name="longitude" disabled></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col (click)="getCoordinates()" class="ion-padding-top ion-align-self-center" size="2">
+                        <ion-icon class="ion-padding-top" size="large" name="md-locate"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do profissional</ion-label>
+                            <ion-input placeholder="Não informado"type="text"(ionBlur)="isNumber($event.target.value)" maxlength='15'[(ngModel)]="model.cns_profissional" name="cns_profissional"
+                                required>
+                            </ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CBO</ion-label>
+                            <ion-input  placeholder="Não informado"maxlength='6' type="text"(ionBlur)="isNumber($event.target.value)" [(ngModel)]="model.cbo" name="cbo" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNES</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"maxlength='7' [(ngModel)]="model.cnes" name="cnes" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">INE</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"maxlength='10'[(ngModel)]="model.ine" name="ine" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_cadastro' name="data_cadastro"
+                                display-format="DD/MMMM/YYYY" required cancelText="Desistir" doneText="Confirmar"
+                                placeholder=""
+                                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                value="2019-10-04"required>
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-button type="button" (click)="nextStep()" class="buttons-next" style="margin-left: 55%;">
+                        Próximo
+                        <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                    </ion-button>
+                </ion-row>
+            </ion-grid>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    IDENTIFICAÇÃO DO USUÁRIO / CIDADÃO
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do cidadão</ion-label>
+                            <ion-input placeholder="Não informado" type="text" maxlength='15' [(ngModel)]="model.cns_cidadao" name="cns_cidadao"
+                                (ionBlur)="isNumber($event.target.value)"></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome do cidadão</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="validateName($event.target.value)"[(ngModel)]="model.nome_completo" name="nome_completo">
+                            </ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data de nascimento</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_nascimento' name="data_nascimento"
+                                display-format="DD/MMMM/YYYY" cancelText="Desistir" doneText="Confirmar" placeholder=""
+                                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                value="2019-10-04"required>
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Sexo</ion-label>
+                            <ionic-selectable placeholder="Não informado" required class="selector" required #Sexo item-content [(ngModel)]="model.sexo"
+                                name="sexo" itemValueField="id" itemTextField="nome" [items]="collectionSexo"
+                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Local de atendimento*</ion-label>
+                            <ionic-selectable placeholder="Não informado" required class="selector" required #localAtendimento item-content
+                                [(ngModel)]="model.local_atendimento" name="local_atendimento" itemValueField="id"
+                                itemTextField="nome" [items]="collectionLocalAtendimento" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar" [canSearch]="true">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    CRIANÇAS MENORES DE 6 MESES**
+                </mat-panel-title>
+                <mat-panel-description>
+                    (**Todas as questões do bloco devem ser respondidas)
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">A criança ontem tomou leite do
+                                peito</ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca1_ontem_tomou_leite_peito"
+                                name="crianca1_ontem_tomou_leite_peito" itemValueField="id" itemTextField="nome"
+                                [items]="collectionPreguntas" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-card>
+                            <ion-card-title>
+                                <ion-label class="ion-align-self-center" position='stacked'>Omtem a criança consumiu:
+                                </ion-label>
+                            </ion-card-title>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Mingau</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_mingau"
+                                                name="crianca1_ontem_consumiu_mingau" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Água/Chá
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_agua_cha"
+                                                name="crianca1_ontem_consumiu_agua_cha" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Leite de vaca
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_leite_vaca"
+                                                name="crianca1_ontem_consumiu_leite_vaca" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Fórmula infantil
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_formula_infatil"
+                                                name="crianca1_ontem_consumiu_formula_infatil" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Suco de fruta
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_suco_fruta"
+                                                name="crianca1_ontem_consumiu_suco_fruta" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Fruta</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_fruta"
+                                                name="crianca1_ontem_consumiu_fruta" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Comida de sal (de
+                                                panela,papa ou sopa)</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_comida_sal"
+                                                name="crianca1_ontem_consumiu_comida_sal" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Outros
+                                                alimentos/bebidas</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca1_ontem_consumiu_outros_alimentos"
+                                                name="crianca1_ontem_consumiu_outros_alimentos" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    CRIANÇAS MENORES DE 6 A 23 MESES**
+                </mat-panel-title>
+                <mat-panel-description>
+                    (**Todas as questões do bloco devem ser respondidas)
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>A criança ontem tomou leite do peito</ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca2_ontem_tomou_leite_peito"
+                                name="crianca2_ontem_tomou_leite_peito" itemValueField="id" itemTextField="nome"
+                                [items]="collectionPreguntas" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Omtem a criança comeu fruta
+                                inteira,em pedaço ou amassada
+                            </ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca2_ontem_comeu_fruta_inteira"
+                                name="crianca2_ontem_comeu_fruta_inteira" itemValueField="id" itemTextField="nome"
+                                [items]="collectionPreguntas" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar" (onChange)=showVezesFrutaSlect($event)>
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+
+                <ion-row *ngIf="ShowSelectFruta == true">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Quantas vezes</ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca2_ontem_comeu_fruta_inteira_vezes"
+                                name="crianca2_ontem_comeu_fruta_inteira_vezes" itemValueField="id" itemTextField="nome"
+                                [items]="collectionNumeroVezes" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Omtem a criança comeu comida de
+                                sal(de panela,papa ou sopa)?
+                            </ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca2_ontem_comeu_comida_sal"
+                                name="crianca2_ontem_comeu_comida_sal" itemValueField="id" itemTextField="nome"
+                                [items]="collectionPreguntas" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar" (onChange)=showVezesComidaSalSlect($event)>
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row *ngIf="ShowSelectSal == true">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-padding-bottom">Quantas vezes</ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.crianca2_ontem_comeu_comida_sal_vezes"
+                                name="crianca2_ontem_comeu_comida_sal_vezes" itemValueField="id" itemTextField="nome"
+                                [items]="collectionNumeroVezes" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-card>
+                            <ion-card-title>
+                                <ion-label class="ion-align-self-center" position='stacked'>Omtem a criança consumiu:
+                                </ion-label>
+                            </ion-card-title>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Outro leite que não
+                                                o leite do peito</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_outro_leite"
+                                                name="crianca2_ontem_consumiu_outro_leite" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Mingau com leite
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_mingau_leite"
+                                                name="crianca2_ontem_consumiu_mingau_leite" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked' class="ion-padding-bottom">Iogurte</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_iogurte"
+                                                name="crianca2_ontem_consumiu_iogurte" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Legume(não
+                                                considereadar os utilizados como
+                                                temperos,<br> nem batata, mandioca/aipim/macaxeira,<br> cará e inhame)
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_legumes"
+                                                name="crianca2_ontem_consumiu_legumes" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Vegetal ou fruta de
+                                                cor
+                                                alaranjada (abóbora ou
+                                                jerimum,cenoura mamão<br> manga)ou folhas
+                                                verdes-escuras(couve,caruru,beldroega,bertalha,<br>espinafre,mostarda)
+                                            </ion-label>
+
+
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_vegetal_fruta"
+                                                name="crianca2_ontem_consumiu_vegetal_fruta" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Verdura de
+                                                folha<br>(alface,acelga,repolho)</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_verdura_folha"
+                                                name="crianca2_ontem_consumiu_verdura_folha" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Carne
+                                                (boi,frango,peixe,porco,miúdos,outras)<br>ou ovo</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_carne"
+                                                name="crianca2_ontem_consumiu_carne" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Figado</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_figado"
+                                                name="crianca2_ontem_consumiu_figado" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Feijão</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_feijao"
+                                                name="crianca2_ontem_consumiu_feijao" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>
+                                                Arroz,batata,inhame,aipim/macaxeira/mandioca,<br>farinha ou macarrão
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_arroz"
+                                                name="crianca2_ontem_consumiu_arroz" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Hambúrger e/ou
+                                                embutidos <br> (presunto,mortadela,salame,linguiça,salsicha</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_hamburguer"
+                                                name="crianca2_ontem_consumiu_hamburguer" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Bebidas
+                                                adoçadas(refrigerante,suco de caixa,suco em pó,<br>água de coco de
+                                                caixhinha,xaropes de guaraná/groselha,<br>suco de fruta com adição de
+                                                açúcar)</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_bebida_adocada"
+                                                name="crianca2_ontem_consumiu_bebida_adocada" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Macarrão
+                                                instantãneo,
+                                                salgadinhos de pactote<br> ou biscoitos salgados</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_macarrao_instataneo"
+                                                name="crianca2_ontem_consumiu_macarrao_instataneo" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Biscoito
+                                                recheado,doces
+                                                ou guloseimpas<br>(balas,pirulitos,chiclete,caramelo,gelatina)
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.crianca2_ontem_consumiu_biscoito_recheado"
+                                                name="crianca2_ontem_consumiu_biscoito_recheado" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    CRIANÇAS COM 2 ANOS OU MAIS, ADOLESCENTES, ADULTOS, GESTANTES E IDOSOS
+                </mat-panel-title>
+                <mat-panel-description>
+                    (**Todas as questões do bloco devem ser respondidas)
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label class="ion-padding-bottom" position='stacked'>Você tem costume de realizar as
+                                refeicões assistindo à TV, mexendo <br>no computador e/ou celular?</ion-label>
+                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                [(ngModel)]="model.adulto_refeicao_tv" name="adulto_refeicao_tv" itemValueField="id"
+                                itemTextField="nome" [items]="collectionPreguntas" [shouldFocusSearchbar]="true"
+                                [shouldStoreItemValue]="true" searchFailText="Sem dados a mostrar"
+                                searchPlaceholder="Pesquisar">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label class="ion-padding-bottom" position='stacked'>Quais refeições você faz ao longo
+                                do
+                                dia? <br>no computador e/ou celular?</ion-label>
+
+                            <ion-select placeholder="Não informado" [(ngModel)]='refeicoes' name="refeicoes" interface='alert'
+                                placeholder="Não informado" [multiple]="refeicoes"
+                                (ionChange)='getCheckedValuesRefeicoes("refeicoes", $event)'>
+                                <ion-select-option *ngFor='let option of collectionRefeicoes' value='{{option.id}}'>
+                                    {{option.nome}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                    </ion-col>
+
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                        class="ion-align-self-center">
+                        <ion-card>
+                            <ion-card-title>
+                                <ion-label class="ion-align-self-center" position='stacked'>Omtem, você consumiu:
+                                </ion-label>
+                            </ion-card-title>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked'>Feijão</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_feijao"
+                                                name="adulto_ontem_consumiu_feijao" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked'>Frutas frescas(não considerar suco de frutas)
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_fruta"
+                                                name="adulto_ontem_consumiu_fruta" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label position='stacked'>Verduras e/ou legumes(não considerar
+                                                batata,mandioca,aipim,macaxeira,cará e inhame)</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_verdura_legume"
+                                                name="adulto_ontem_consumiu_verdura_legume" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Hambúrger e/ou
+                                                embutidos <br> (presunto,mortadela,salame,linguiça,salsicha</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_hamburguer"
+                                                name="adulto_ontem_consumiu_hamburguer" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Bebidas
+                                                adoçadas(refrigerante,suco de caixa,suco em pó,<br>água de coco de
+                                                caixhinha,xaropes de guaraná/groselha,<br>suco de fruta com adição de
+                                                açúcar)</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_bebida_adocada"
+                                                name="adulto_ontem_consumiu_bebida_adocada" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Macarrão
+                                                instantãneo,
+                                                salgadinhos de pactote<br> ou biscoitos salgados</ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_macarrao_instataneo"
+                                                name="adulto_ontem_consumiu_macarrao_instataneo" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="ion-align-self-center">
+                                        <ion-item>
+                                            <ion-label class="ion-padding-bottom" position='stacked'>Biscoito
+                                                recheado,doces
+                                                ou guloseimpas<br>(balas,pirulitos,chiclete,caramelo,gelatina)
+                                            </ion-label>
+                                            <ionic-selectable placeholder="Não informado" class="selector"  #LeitePeito item-content
+                                                [(ngModel)]="model.adulto_ontem_consumiu_biscoito_recheado"
+                                                name="adulto_ontem_consumiu_biscoito_recheado" itemValueField="id"
+                                                itemTextField="nome" [items]="collectionPreguntas"
+                                                [shouldFocusSearchbar]="true" [shouldStoreItemValue]="true"
+                                                searchFailText="Sem dados a mostrar" searchPlaceholder="Pesquisar">
+                                                <ng-template ionicSelectableCloseButtonTemplate>
+                                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                                </ng-template>
+                                                <ng-template ionicSelectableIconTemplate>
+                                                    <ion-icon class="icono-select" color="danger" name="alert">
+                                                    </ion-icon>
+                                                </ng-template>
+                                            </ionic-selectable>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row class="ion-align-self-end">
+                                    <ion-col width-50 style="text-align: center">
+                                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                                            Anterior
+                                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                                        </ion-button>
+                                        
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+                
+            </ion-grid>
+        </mat-expansion-panel>
+        <div>
+            <ion-button type="submit" expand="block"[disabled]="!form.valid"> Salvar </ion-button>
+            <ion-button type="button" expand="block" (click)="goBack()"> Cancelar</ion-button>
+        </div>
+    </form>
+</ion-content>

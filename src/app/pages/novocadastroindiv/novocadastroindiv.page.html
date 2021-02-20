@@ -1,0 +1,885 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-buttons slot="primary">
+        <ion-icon style="color: aliceblue;" slot="icon-only" name="ios-images" (click)="seleccionarImagen()"
+          class="image">
+        </ion-icon>
+        <ion-icon style="color: aliceblue;" slot="icon-only" name="ios-undo" (click)="goBack()"></ion-icon>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title>Cadastro Individual</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm" method="post">
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-create"></ion-icon> Cadastro Individual
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Latitude</ion-label>
+        <ion-input [(ngModel)]="Latitude" type="number" name="Latitude"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-label position="floating">Longitude</ion-label>
+        <ion-input [(ngModel)]="Longitude" type="number" name="Longitude"></ion-input>
+      </ion-col>
+      <ion-col (click)="getCoordinates()" class="ion-padding-top" size="2">
+        <ion-icon class="ion-padding-top" size="large" name="md-locate"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">CNS do profissional<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="CNSdoprofessional" name="CNSdoprofessional" type="number">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">CBO<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="CBO" name="CBO" type="number">
+        </ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-label position="floating">CNES<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="CNES" name="CNES" type="number">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">INE<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="INE" name="INE" type="number">
+        </ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-label>Data<span class="red">*</span></ion-label>
+        <ion-datetime required class="selector" placeholder="Selecione o data..." [(ngModel)]="Data" name="Data"
+          displayFormat="DD/MM/YYYY" #dataCtrl="ngModel" required cancel-text="Cancelar" done-text="Confirma">
+        </ion-datetime>
+      </ion-col>
+    </ion-row>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Identificacao Do Usuario / Cidadao
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">CNS do cidadão</ion-label>
+        <ion-input [(ngModel)]="CNSdocidadao" name="CNSdocidadao" type="number">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Cidadão é o responsável familiar?</ion-label>
+        <ion-checkbox (ionChange)="onChangeSituacao(Cidadao)" [(ngModel)]="Cidadao" name="Cidadao" class="check"
+          checked="true"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="Cidadao; else elseBlock">
+    </div>
+    <ng-template #elseBlock>
+      <ion-row>
+        <ion-col>
+          <ion-label position="floating">CNS do responsável familiar<span class="red">*</span></ion-label>
+          <ion-input required [(ngModel)]="CNSdoresponsavel" name="CNSdoresponsavel" type="number"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Fora de área</ion-label>
+        <ion-checkbox (ionChange)="onChangeSituacao(Fora)" [(ngModel)]="Fora" name="Fora" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+      <ion-col>
+        <ion-label position="floating">Microárea<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="Microarea" name="Microarea" type="number"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Nome completo<span class="red">*</span></ion-label>
+        <ion-input required [(ngModel)]="Nome" name="Nome" type="text"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Data de nascimento<span class="red">*</span></ion-label>
+        <ion-datetime class="selector" placeholder="Selecione o data..." [(ngModel)]="DatadeNascimento"
+          name="DatadeNascimento" displayFormat="DD/MM/YYYY" #dataCtrl="ngModel" required cancel-text="Cancelar"
+          done-text="Confirma">
+        </ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Sexo</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Sexo" name="Sexo" value="Sexo" okText="Confirma"
+          cancelText="Cancelar">
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Feminino">Feminino</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Raça/Cor<span class="red">*</span></ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Raca" name="Raca" value="Raca" okText="Confirma"
+          cancelText="Cancelar">
+          <ion-select-option value="Branca">Branca</ion-select-option>
+          <ion-select-option value="Preta">Preta</ion-select-option>
+          <ion-select-option value="Parda">Parda</ion-select-option>
+          <ion-select-option value="Amarela">Amarela</ion-select-option>
+          <ion-select-option value="Indigena">Indígena</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">N NIS(PIS/PASEP)</ion-label>
+        <ion-input required [(ngModel)]="NIS" name="NIS" type="number"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Nome completo da mãe</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size=8>
+        <div *ngIf="Mae; else elseBlock">
+        </div>
+        <ng-template #elseBlock>
+          <ion-input placeholder="Nome completo da mãe" [(ngModel)]="nomedemae" name="nomedemae" type="text">
+          </ion-input>
+        </ng-template>
+      </ion-col>
+      <ion-col size=4>
+        <ion-label position="floating">Não consta</ion-label>
+        <ion-checkbox (ionChange)="onChangeNomedeMae(Mae)" [(ngModel)]="Mae" name="Mae" class="checkMae">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Nome completo do pai</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size=8>
+        <div *ngIf="Pai; else elseBlock">
+        </div>
+        <ng-template #elseBlock>
+          <ion-input placeholder="Nome completo do pai" [(ngModel)]="nomedepai" name="nomedepai" type="text">
+          </ion-input>
+        </ng-template>
+      </ion-col>
+      <ion-col size=4>
+        <ion-label position="floating">Não consta</ion-label>
+        <ion-checkbox (ionChange)="onChangeNomedePai(Pai)" [(ngModel)]="Pai" name="Pai" class="checkPai">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label>Nacionalidade<span class="red">*</span></ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Nacionalidade" name="Nacionalidade"
+          value="Nacionalidade" okText="Confirma" cancelText="Cancelar">
+          <ion-select-option value="Brasileira">Brasileira</ion-select-option>
+          <ion-select-option value="Naturalizado">Naturalizado</ion-select-option>
+          <ion-select-option value="Estrangeiro">Estrangeiro</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Telefone cellular</ion-label>
+        <ion-input [(ngModel)]="Cellular" name="Cellular" type="tel"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input [(ngModel)]="email" type="email" name="email"></ion-input>
+      </ion-col>
+    </ion-row>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Informação Sociodemográfica
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Relação de parentesco com a família responsável</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Relacao" name="Relacao" value="Relacao"
+          okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Conjuge">Cônjuge/Companheiro(a)</ion-select-option>
+          <ion-select-option value="Filho">Filho(a)</ion-select-option>
+          <ion-select-option value="Entido">Entido(a)</ion-select-option>
+          <ion-select-option value="Neto">Neto(a)/Bisneto(a)</ion-select-option>
+          <ion-select-option value="Pai">Pai/Mãe</ion-select-option>
+          <ion-select-option value="Sogro">Sogro(a)</ion-select-option>
+          <ion-select-option value="Irmao">Irmão/Irmã</ion-select-option>
+          <ion-select-option value="Genro">Genro/Nora</ion-select-option>
+          <ion-select-option value="Outroparente">Outro parente</ion-select-option>
+          <ion-select-option value="Naoparente">Não parente</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Ocupação</ion-label>
+        <ion-input [(ngModel)]="Ocupacao" name="Ocupacao" type="text"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Frequenta escola ou creche?<span class="red">*</span></ion-label>
+        <ion-checkbox [(ngModel)]="Frequenta" name="Frequenta" class="checkFrequenta">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Qual é o curso mais elevado que frequenta ou frequentou?</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Curso" name="Curso" value="Curso"
+          okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Creche">Creche</ion-select-option>
+          <ion-select-option value="Preescola">Pré-escola(exceto CA)</ion-select-option>
+          <ion-select-option value="Alfabetizada">Classe Alfabetizada - CA</ion-select-option>
+          <ion-select-option value="4series">Ensino Fundamental 1a a 4a séries</ion-select-option>
+          <ion-select-option value="8series">Ensino Fundamental 5a a 8a séries</ion-select-option>
+          <ion-select-option value="Completo">Ensino Fundamental Completo</ion-select-option>
+          <ion-select-option value="Espicial">Ensino Fundamental Espicial</ion-select-option>
+          <ion-select-option value="Eja">Ensino Fundamental EJA - séries inicias(Supletivo 1a a 4a)</ion-select-option>
+          <ion-select-option value="Eja59">Ensino Fundamental EJA - séries inicias(Supletivo 5a a 9a)
+          </ion-select-option>
+          <ion-select-option value="Medio">Ensino Médio ,Médio 2 Ciclo (Científico ,Técnico e etc)</ion-select-option>
+          <ion-select-option value="Espicial">Ensino Médio Espicial</ion-select-option>
+          <ion-select-option value="Supletivo">Ensino Médio EJA (Supletivo)</ion-select-option>
+          <ion-select-option value="Superior">Superior, Aperfeiçoamento, Especialização, Mestrado, Doutorado
+          </ion-select-option>
+          <ion-select-option value="Alfabetizacao">Alfabetização para Adultos (Mobral, etc)</ion-select-option>
+          <ion-select-option value="Nenhum">Nenhum</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Situação no mercado de trabalho</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Situacaodetrabalho" name="Situacaodetrabalho"
+          value="Situacaodetrabalho" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Empregador">Empregador</ion-select-option>
+          <ion-select-option value="Assalariadocom">Assalariado com carteira de trabalho</ion-select-option>
+          <ion-select-option value="Assalariadosem">Assalariado sem carteira de trabalho</ion-select-option>
+          <ion-select-option value="Autonomocom">Autônomo com previdência social</ion-select-option>
+          <ion-select-option value="Autonomosem">Autônomo sem previdência social</ion-select-option>
+          <ion-select-option value="Aposentado">Aposentado/Pensionista</ion-select-option>
+          <ion-select-option value="Desempregado">Desempregado</ion-select-option>
+          <ion-select-option value="Naotrabalha">Não trabalha</ion-select-option>
+          <ion-select-option value="Outro">Outro</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Criança de 0 a 9 anos, com quem fica?</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Crianca" name="Crianca" value="Crianca"
+          okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Adulto">Adulto responsável</ion-select-option>
+          <ion-select-option value="Outra">Outra(s) Criança(s)</ion-select-option>
+          <ion-select-option value="Adolescente">Adolescente</ion-select-option>
+          <ion-select-option value="Sozinha">Sozinha</ion-select-option>
+          <ion-select-option value="Creche">Creche</ion-select-option>
+          <ion-select-option value="Outro">Outro</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Frequenta cuidador tradicional?</ion-label>
+        <ion-checkbox [(ngModel)]="Cuidador" name="Cuidador" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Participa de algum grupo comunitário?</ion-label>
+        <ion-checkbox [(ngModel)]="Participa" name="Participa" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Possui plano de saúde privado?</ion-label>
+        <ion-checkbox [(ngModel)]="Possui" name="Possui" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">É membro de povo ou comunidade tradicional?</ion-label>
+        <ion-checkbox (ionChange)="onChangeQual(Membro)" [(ngModel)]="Membro" name="Membro" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Membro; else elseBlock">
+          <ion-label position="floating">Qual?</ion-label>
+          <ion-input placeholder="Qual?" [(ngModel)]="Qual" name="Qual" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Deseja informar orientação sexual?</ion-label>
+        <ion-checkbox (ionChange)="onChangeSexual(DesejaSexual)" [(ngModel)]="DesejaSexual" name="DesejaSexual"
+          class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="DesejaSexual; else elseBlock">
+          <ion-label position="floating">Qual?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="OrientacaoSexual" name="OrientacaoSexual"
+            value="OrientacaoSexual" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Heterossexual">Heterossexual</ion-select-option>
+            <ion-select-option value="Homossexual">Homossexual(gay/lésbica)</ion-select-option>
+            <ion-select-option value="Bissexual">Bissexual</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Deseja informar identidade gênero?</ion-label>
+        <ion-checkbox (ionChange)="onChangeGenero(DesejaGenero)" [(ngModel)]="DesejaGenero" name="DesejaGenero"
+          class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="DesejaGenero; else elseBlock">
+          <ion-label position="floating">Qual?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="OrientacaoGenero" name="OrientacaoGenero"
+            value="OrientacaoGenero" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Homem">Homem transexual</ion-select-option>
+            <ion-select-option value="Mulher">Mulher transexual</ion-select-option>
+            <ion-select-option value="Travesti">Travesti</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem alguma deficiência?<span class="red">*</span></ion-label>
+        <ion-checkbox (ionChange)="onChangeDeficiencia(Deficiencia)" [(ngModel)]="Deficiencia" name="Deficiencia"
+          class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Deficiencia; else elseBlock">
+          <ion-label position="floating">Qual(is)?</ion-label>
+          <ion-select multiple="true" class="selector" interface="popover" [(ngModel)]="OrientacaoDeficiencia"
+            name="OrientacaoDeficiencia" value="OrientacaoDeficiencia" okText="Confirma" placeholder="Não informado"
+            cancelText="Cancelar">
+            <ion-select-option value="Auditiva">Auditiva</ion-select-option>
+            <ion-select-option value="Visual">Visual</ion-select-option>
+            <ion-select-option value="Intelectual">Intelectual/Cognitiva</ion-select-option>
+            <ion-select-option value="Fisica">Física</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Saída do Cadastro
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Mudança de território</ion-label>
+        <ion-checkbox [(ngModel)]="Mudanca" name="Mudanca" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Óbito</ion-label>
+        <ion-checkbox (ionChange)="onChangeObito(Obito)" [(ngModel)]="Obito" name="Obito" class="checkCuidador">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="Obito; else elseBlock">
+      <ion-row>
+        <ion-col>
+          <ion-label>Data do Óbito</ion-label>
+          <ion-datetime class="selector" placeholder="Data do Óbito" [(ngModel)]="DatadoObito" name="DatadoObito"
+            displayFormat="DD/MM/YYYY" #dataCtrl="ngModel" cancel-text="Cancelar" done-text="Confirma">
+          </ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label position="floating">Número da DO</ion-label>
+          <ion-input placeholder="Número da DO" [(ngModel)]="DO" name="DO" type="number"></ion-input>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ng-template #elseBlock>
+    </ng-template>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Terme de Recusa
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Gozando de plena consciência dos meus atos , recuso este cadastro , mesmo que
+          isso facilite o acompanhamento a minha saúde de meus familiares.Estou ciente de que essa recusa nao implicaráo
+          não atendimento na unidade de saúde.</ion-label>
+        <ion-checkbox (ionChange)="onChangeGozando(Gozando)" [(ngModel)]="Gozando" name="Gozando" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Gozando; else elseBlock">
+          <ion-label position="floating">Informe o RG</ion-label>
+          <ion-input placeholder="Informe o RG" [(ngModel)]="RG" name="RG" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Condições/Situações de saúde Gerais
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está gestante?</ion-label>
+        <ion-checkbox (ionChange)="onChangeGestante(Gestante)" [(ngModel)]="Gestante" name="Gestante" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Gestante; else elseBlock">
+          <ion-label position="floating">Qual é a maternidade de referência?</ion-label>
+          <ion-input placeholder="Qual é a maternidade de referência?" [(ngModel)]="Maternidade" name="Maternidade"
+            type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Sobre seu peso, você se considera?</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Peso" name="Peso" value="Peso" okText="Confirma"
+          placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Abaixo">Abaixo do peso</ion-select-option>
+          <ion-select-option value="Adequado">Peso adequado</ion-select-option>
+          <ion-select-option value="Acima">Acima do peso</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está Fumante?</ion-label>
+        <ion-checkbox [(ngModel)]="Fumante" name="Fumante" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Faz uso de álcool?</ion-label>
+        <ion-checkbox [(ngModel)]="Alcool" name="Alcool" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Faz uso de outras drogas?</ion-label>
+        <ion-checkbox [(ngModel)]="Drogas" name="Drogas" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem hipertensão arterial?</ion-label>
+        <ion-checkbox [(ngModel)]="Arterial" name="Arterial" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem diabetes?</ion-label>
+        <ion-checkbox [(ngModel)]="Diabetes" name="Diabetes" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Teve AVC/derrame?</ion-label>
+        <ion-checkbox [(ngModel)]="Derrame" name="Derrame" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Teve infarto?</ion-label>
+        <ion-checkbox [(ngModel)]="Infarto" name="Infarto" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem doença cardíaca/do coração?</ion-label>
+        <ion-checkbox (ionChange)="onChangeCoracao(Coracao)" [(ngModel)]="Coracao" name="Coracao" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Coracao; else elseBlock">
+          <ion-label position="floating">Indique qual(is) ?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="Cardiaca" name="Cardiaca" value="Cardiaca"
+            okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Cardiaca">Insuficiência cardíaca</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+            <ion-select-option value="Sabe">Não sabe</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem ou teve problemas nos rins?</ion-label>
+        <ion-checkbox (ionChange)="onChangeRins(Rins)" [(ngModel)]="Rins" name="Rins" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Rins; else elseBlock">
+          <ion-label position="floating">Indique qual(is) ?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="Respiratoria" name="Respiratoria"
+            value="Respiratoria" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Renal">Insuficiência renal</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+            <ion-select-option value="Sabe">Não sabe</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem doença respiratória/no pulmão?</ion-label>
+        <ion-checkbox (ionChange)="onChangeDoenca(Doenca)" [(ngModel)]="Doenca" name="Doenca" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Doenca; else elseBlock">
+          <ion-label position="floating">Indique qual(is) ?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="Respiratoria" name="Respiratoria"
+            value="Respiratoria" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Asma">Asma</ion-select-option>
+            <ion-select-option value="DPOC">DPOC/Enfisema</ion-select-option>
+            <ion-select-option value="Outro">Outro</ion-select-option>
+            <ion-select-option value="Sabe">Não sabe</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está com hanseníase?</ion-label>
+        <ion-checkbox [(ngModel)]="Hanseniase" name="Hanseniase" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está com tuberculose?</ion-label>
+        <ion-checkbox [(ngModel)]="Tuberculose" name="Tuberculose" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem ou teve câncer?</ion-label>
+        <ion-checkbox [(ngModel)]="Cancer" name="Cancer" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Teve alguma internação nos últimos 12 meses?</ion-label>
+        <ion-checkbox (ionChange)="onChangeInternacao(Internacao)" [(ngModel)]="Internacao" name="Internacao"
+          class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Internacao; else elseBlock">
+          <ion-label position="floating">Por queal causa?</ion-label>
+          <ion-input placeholder="Por queal causa?" [(ngModel)]="Causa" name="Causa" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Teve diagnóstico de algum problema de saúde mental por profissional de saúde?
+        </ion-label>
+        <ion-checkbox [(ngModel)]="Diagnostico" name="Diagnostico" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está acamado?</ion-label>
+        <ion-checkbox [(ngModel)]="Acamado" name="Acamado" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está domiciliado?</ion-label>
+        <ion-checkbox [(ngModel)]="Domiciliado" name="Domiciliado" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Usa plantas medicinais?</ion-label>
+        <ion-checkbox (ionChange)="onChangeMedicinais(Medicinais)" [(ngModel)]="Medicinais" name="Medicinais"
+          class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Medicinais; else elseBlock">
+          <ion-label position="floating">Indique qual(is)?</ion-label>
+          <ion-input placeholder="Indique qual(is)?" [(ngModel)]="MedicinaisQual" name="MedicinaisQual" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Uso outras práticas integrativas e complementares?</ion-label>
+        <ion-checkbox [(ngModel)]="Integrativas" name="Integrativas" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Outras condições de saúde?</ion-label>
+        <ion-checkbox (ionChange)="onChangeCondicoesdeSaude(CondicoesdeSaude)" [(ngModel)]="CondicoesdeSaude"
+          name="CondicoesdeSaude" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="CondicoesdeSaude; else elseBlock">
+          <ion-label position="floating">1-qual?</ion-label>
+          <ion-input placeholder="Indique qual" [(ngModel)]="QualI" name="QualI" type="text"></ion-input>
+          <ion-label position="floating">2-qual?</ion-label>
+          <ion-input placeholder="Indique qual" [(ngModel)]="QualII" name="QualII" type="text"></ion-input>
+          <ion-label position="floating">3-qual?</ion-label>
+          <ion-input placeholder="Indique qual" [(ngModel)]="QualIII" name="QualIII" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <div class="ion-text-center">
+      <ion-item class="itemm2">
+        <ion-icon style="color: white;" slot="start" name="ios-list-box"></ion-icon>Cidadão Em Situação De Rua
+      </ion-item>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Está em situação de rua?<span class="red">*</span></ion-label>
+        <ion-checkbox (ionChange)="onChangeSituacaodeRua(SituacaodeRua)" [(ngModel)]="SituacaodeRua"
+          name="SituacaodeRua" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="SituacaodeRua; else elseBlock">
+          <ion-label position="floating">Tempo em situação de rua?</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="Tempo" name="Tempo" value="Tempo"
+            okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Meses6">
+              < 6 meses</ion-select-option>
+                <ion-select-option value="Meses12">De 6 a 12 meses</ion-select-option>
+                <ion-select-option value="Anos5">De 1 a 5 anos</ion-select-option>
+                <ion-select-option value="Anoss5"> > 5 anos</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Recebe algum benéfico?</ion-label>
+        <ion-checkbox [(ngModel)]="Benefico" name="Benefico" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Possui referência familiar?</ion-label>
+        <ion-checkbox [(ngModel)]="ReferenciaFamiliar" name="ReferenciaFamiliar" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Quantas vezes se alimenta ao dia?</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="Alimenta" name="Alimenta" value="Alimenta"
+          okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Vez1"> 1 Vez</ion-select-option>
+          <ion-select-option value="Vezes23">2 ou 3 vezes</ion-select-option>
+          <ion-select-option value="MaisVezes">mais de 3 vezes</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Qual a origem da alimentação?</ion-label>
+        <ion-select class="selector" interface="popover" [(ngModel)]="OrigemdaAlimentacao" name="OrigemdaAlimentacao"
+          value="OrigemdaAlimentacao" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+          <ion-select-option value="Restaurante"> Restaurante Popular</ion-select-option>
+          <ion-select-option value="DoacaoReligioso">Doação de Grupo Religioso</ion-select-option>
+          <ion-select-option value="DoacaoRestaurante">Doação de Restaurante</ion-select-option>
+          <ion-select-option value="DoacaoPopular">Doação de Popular</ion-select-option>
+          <ion-select-option value="Outros">Outros</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">É acompanhado por outra instituição?</ion-label>
+        <ion-checkbox (ionChange)="onChangeAcompanhado(Acompanhado)" [(ngModel)]="Acompanhado" name="Acompanhado"
+          class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Acompanhado; else elseBlock">
+          <ion-label position="floating">Indique qual(is)?</ion-label>
+          <ion-input placeholder="Indique qual(is)?" [(ngModel)]="AcompanhadoQual" name="AcompanhadoQual" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Visita algum familiar com frequência?</ion-label>
+        <ion-checkbox (ionChange)="onChangeFrequencia(Frequencia)" [(ngModel)]="Frequencia" name="Frequencia"
+          class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="Frequencia; else elseBlock">
+          <ion-label position="floating">Qual é o grau de parentesco?</ion-label>
+          <ion-input placeholder="Qual é o grau de parentesco?" [(ngModel)]="Parentesco" name="Parentesco" type="text">
+          </ion-input>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Tem acesso a higiene pessoal?</ion-label>
+        <ion-checkbox (ionChange)="onChangeHigienePessoal(HigienePessoal)" [(ngModel)]="HigienePessoal"
+          name="HigienePessoal" class="checkFora">
+        </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="HigienePessoal; else elseBlock">
+          <ion-label position="floating">Indique qual(is)</ion-label>
+          <ion-select class="selector" interface="popover" [(ngModel)]="HigienePessoalQual" name="HigienePessoalQual"
+            value="HigienePessoalQual" okText="Confirma" placeholder="Não informado" cancelText="Cancelar">
+            <ion-select-option value="Banho">Banho</ion-select-option>
+            <ion-select-option value="Sanitario">Acesso ao sanitário</ion-select-option>
+            <ion-select-option value="Bucal">Higiene bucal</ion-select-option>
+            <ion-select-option value="Outros">Outros</ion-select-option>
+          </ion-select>
+        </div>
+        <ng-template #elseBlock>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+
+    <div class="ion-text-center">
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" [disabled]="!form.valid" class="at_but">Salvar</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="Cancelar();" class="at_but">Cancelar</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+</ion-content>

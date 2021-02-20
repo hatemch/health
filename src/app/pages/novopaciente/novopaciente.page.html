@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Novo Paciente</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <!--
+      Use a documentação para construir os componestes
+      https://ionicframework.com/docs/api/action-sheet
+    -->
+  <form [formGroup]="slideOneForm" #form="ngForm" (ngSubmit)="atualizar(form);" method="post">
+
+    <ion-grid>
+      <ion-row>
+
+        <ion-col class="ion-text-center">
+          <ion-avatar class="ava">
+            <img src="{{imageFileBase64}}" (click)="seleccionarImagen()">
+          </ion-avatar>
+
+        </ion-col>
+        <input #inputcamera type="file" accept="image/*" capture="camera" [hidden]=true />
+
+      </ion-row>
+
+    </ion-grid>
+
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input formControlName="nome" type="text" placeholder="Primeiro Nome" name="Nome" required> </ion-input>
+
+    <ion-label position="floating">Sobrenome:</ion-label>
+    <ion-input formControlName="sobrenome" type="text" placeholder="Informe Sobrenome " name="SobreNome" required>
+    </ion-input>
+
+    <ion-label position="floating">Data De Nascimento:</ion-label>
+    <ion-datetime formControlName="data" doneText='OK' cancelText='CANCELAR' type="text" displayFormat="DD/MM/YYYY"
+      placeholder="Informe a data de nascimento " name="DataDeNascimento" required></ion-datetime>
+
+
+
+    <ion-list>
+
+      <ion-label position="floating">Sexo:</ion-label>
+      <ion-select interface="popover" formControlName="sexo" type="text" name="Sexo" placeholder="Selecione o Sexo...">
+        <ion-select-option *ngFor="let os of sexos">{{os.Sexo}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+    <ion-list>
+
+      <ion-label position="floating">RH:</ion-label>
+      <ion-select interface="popover" formControlName="rh" type="text" name="RH" placeholder="Selecione o RH...">
+        <ion-select-option *ngFor="let os of RHs">{{os.RH}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+    <ion-label position="floating">CPF:</ion-label>
+    <!-- 
+    <ion-input formControlName="cpfCont"  type="text"   placeholder="000.000.000-00"
+      required> </ion-input>
+    <ion-item *ngIf="!slideOneForm.controls.cpfCont.valid  && (slideOneForm.controls.cpfCont.dirty || submitAttempt)">
+      <p>por favor insira um CPF válido</p>
+    </ion-item> -->
+
+
+    <ion-input type="text" placeholder="CPF" name="cpf" id="cpf" formControlName="cpfCont"
+      (ionChange)="format(form,'cpf')">
+    </ion-input>
+
+
+
+    <ion-label position="floating">CNS:</ion-label>
+    <ion-input formControlName="cns" type="number" placeholder="Informe CNS " name="CNS" required></ion-input>
+
+    <ion-label position="floating">Perfil:</ion-label>
+    <ion-input formControlName="perfile" type="number" placeholder="Informe Perfil " name="Perfile" required>
+    </ion-input>
+
+    <ion-label position="floating">Email:</ion-label>
+    <ion-input formControlName="email" #email type="email" placeholder="Informe Email" name="email"
+      pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}" required>
+    </ion-input>
+
+
+
+    <div class="ion-text-center">
+
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Criar</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

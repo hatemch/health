@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Físico</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <!--
+      Use a documentação para construir os componestes
+      https://ionicframework.com/docs/api/action-sheet
+    -->
+  <form #form="ngForm" (ngSubmit)="Criacao(form);" method="post">
+
+    <ion-grid>
+      <ion-row>
+
+        <ion-col class="ion-text-center">
+          <img src="{{imageFileBase64}}" (click)="seleccionarImagen()" class="back">
+
+        </ion-col>
+        <input #inputcamera type="file" accept="image/*" capture="camera" [hidden]=true />
+
+      </ion-row>
+
+    </ion-grid>
+
+    <!--  </ion-avatar> -->
+    <ion-grid>
+      <ion-row>
+
+        <ion-col>
+
+          Gerador do exame :
+          <ion-item lines="none">
+            <ion-list>
+              <ion-radio-group>
+
+                <ion-item lines="none">
+                  <ion-label>Atendimento</ion-label>
+                  <ion-radio slot="start" value="atend" (ionSelect)='getAtend($event)' class="radio"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>Paciente</ion-label>
+                  <ion-radio slot="start" value="paciente" (ionSelect)='getPaciente($event)' class="radio"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+
+        </ion-col>
+        <ion-col>
+          Tipo do exame :
+          <ion-item lines="none">
+            <ion-list>
+              <ion-radio-group>
+
+                <ion-item lines="none">
+                  <ion-label>Primeira vez</ion-label>
+                  <ion-radio slot="start" value="Primeira" (ionSelect)='getPrimeira($event)' class="radio"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>Controle</ion-label>
+                  <ion-radio slot="start" value="Controle" (ionSelect)='getControle($event)' class="radio"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-searchbar ngModel placeholder="Codigo do gerador" name="Codigo" (ionChange)='atualizarr(form)'
+      value="{{ Codigo  }}"></ion-searchbar>
+
+
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Nome do paciente" name="Nome" required value="{{ Nome  }}">
+    </ion-input>
+
+
+    <ion-label position="floating">Sobrenome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Sobrenome do paciente " name="SobreNome" required
+      value="{{ SobreNome  }}"></ion-input>
+
+    <ion-label position="floating">CPF do paciente:</ion-label>
+    <ion-input ngModel type="text" disabled placeholder="CPF do paciente " name="CPF" required value="{{ CPF  }}">
+    </ion-input>
+
+    <ion-list>
+      <ion-label position="floating">Sexo do paciente:</ion-label>
+      <ion-select ngModel type="text" interface="popover" name="Sexo" placeholder="Sexo do paciente" value="{{ Sexo }}">
+        <ion-select-option *ngFor="let os of sexos">{{os.Sexo}}</ion-select-option>
+      </ion-select>
+    </ion-list>
+
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label position="floating">Peso:</ion-label>
+ 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+
+          <ion-input ngModel type="number" placeholder="(Kg)" name="pesokg" required value="{{ pesokg  }}">
+          </ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-input ngModel type="number" placeholder="(Gr)" name="pesogr" required value="{{ pesogr  }}">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label position="floating">Altura:</ion-label>
+          <ion-input ngModel type="number" placeholder="Altura(cm)" name="altura" required value="{{ altura  }}">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-row>
+      Fumante :
+      <ion-item lines="none">
+        <ion-list>
+          <ion-radio-group>
+
+            <ion-item lines="none">
+              <ion-label>Sim</ion-label>
+              <ion-radio slot="start" value="sim" class="radio" (ionSelect)='getSim($event)'></ion-radio>
+            </ion-item>
+
+            <ion-item lines="none">
+              <ion-label>Não</ion-label>
+              <ion-radio slot="start" value="nao" class="radio" (ionSelect)='getNao($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-item>
+    </ion-row>
+
+
+    <div class="ion-text-center">
+
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Salvar</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

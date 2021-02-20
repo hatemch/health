@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Editar hospital</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+
+  <form #form="ngForm" (ngSubmit)="atualizar(form);" method="post">
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Primeiro Nome" name="Nome" required value="{{ Nome  }}"> </ion-input>
+
+    <ion-label position="floating">Endereço:</ion-label>
+    <ion-input ngModel type="text" placeholder="Informe Sobrenome " name="Endereco" required value="{{ Endereco  }}">
+    </ion-input>
+
+
+    <ion-list>
+
+        <ion-label position="floating">UF:</ion-label>
+        <ion-select ngModel name="UF" interface="popover" placeholder="Selecione o UF..." value="{{ UF  }}" (ionChange)="getCidadeCodigo(form)">
+          <ion-select-option *ngFor="let uf of ufs">{{uf.Sigla}}</ion-select-option>
+        </ion-select>
+  
+      </ion-list>
+  
+      <ion-list>
+  
+        <ion-label position="floating">Nome Cidade:</ion-label>
+        <ion-select ngModel name="NCidade" interface="popover" placeholder="Selecione o Nome Cidade..." value="{{ NCidade  }}">
+          <ion-select-option *ngFor="let os of cidades">{{os.Nome}}</ion-select-option>
+        </ion-select>
+  
+      </ion-list>
+
+
+    <ion-label position="floating">Código da Cidade:</ion-label>
+    <ion-input ngModel type="number" placeholder="Informe o Códido da Cidade " name="CodigoCidade" required
+      value="{{ Codigopostal  }}"></ion-input>
+
+    <ion-label position="floating">Telefone:</ion-label>
+    <ion-input ngModel type="text" min="9" maxlength="15" placeholder="Informe a Telefone " name="Telefone" required
+      value="{{ Telefone  }}"></ion-input>
+
+    <ion-label position="floating">Email:</ion-label>
+    <ion-input #email ngModel type="email" name="Email" pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}"
+      required value="{{ Email  }}">
+    </ion-input>
+
+
+
+
+    <div class="ion-text-center">
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Atualizar</ion-button>
+    </div>
+
+
+  </form>
+
+</ion-content>

@@ -1,0 +1,289 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="delete(item)">
+        <ion-icon slot="icon-only" name="md-trash"> </ion-icon>
+      </ion-button>
+      <ion-button (click)="goGalleries()">
+        <ion-icon slot="icon-only" ios="ios-images" md="md-images"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ subtitle }}</ion-title>
+  </ion-toolbar>
+  <div class="ion-padding" style="height: 45px">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/atendimento-individual-form">
+          <ion-icon ios="ios-list" md="md-list"> </ion-icon>
+          <ion-label>Formulário</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)="getAtendimentoIndividualID()">
+          <ion-icon ios="ios-people" md="md-people"> </ion-icon>
+          <ion-label>Indivíduos</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
+</ion-header>
+
+<ion-content>
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <strong>FICHA DE ATENDIMENTO INDIVIDUAL</strong>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form #form="ngForm" name="frmFicha">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Latitude</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.latitude"
+                name="latitude"
+                disabled
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Longitude</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.longitude"
+                name="longitude"
+                disabled
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            (click)="getCoordinates()"
+            class="ion-padding-top ion-align-self-center"
+            size="2"
+          >
+            <ion-icon
+              class="ion-padding-top"
+              size="large"
+              name="md-locate"
+            ></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNS do profissional* </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cns_profissional"
+                value="{{model.cns_profissional}}"
+                name="cns_profissional"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CBO*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cbo"
+                value="{{model.cbo}}"
+                name="cbo"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="2"
+            offsetMd="2"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNES*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cnes"
+                value="{{model.cnes}}"
+                name="cnes"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="1"
+            offsetMd="1"
+            offsetLg="0"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">INE*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.ine"
+                value="{{model.ine}}"
+                name="ine"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNS do profissional </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cns_profissional_secundario"
+                value="{{model.cns_profissional_secundario}}"
+                name="cns_profissional_secundario"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CBO</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cbo_secundario"
+                value="{{model.cbo_secundario}}"
+                name="cbo_secundario"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="1"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNES</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cnes_secundario"
+                value="{{model.cnes_secundario}}"
+                name="cnes_secundario"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="1"
+            offsetMd="1"
+            offsetLg="0"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">INE</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.ine_secundario"
+                value="{{model.ine_secundario}}"
+                name="ine_secundario"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Data*</ion-label>
+              <ion-datetime
+                [(ngModel)]="model.data_cadastro"
+                name="data_cadastro"
+                display-format="DD/MMMM/YYYY"
+                cancelText="Desistir"
+                doneText="Confirmar"
+                required
+                placeholder=""
+                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                value="2019-10-04"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </mat-expansion-panel>
+  <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+    <ion-button type="submit" expand="block" (click)="salvar()">
+      Salvar
+    </ion-button>
+    <ion-button type="button" expand="block"> Cancelar </ion-button>
+  </div>
+</ion-content>

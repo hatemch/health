@@ -1,0 +1,190 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Sangue</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <!--
+        Use a documentação para construir os componestes
+        https://ionicframework.com/docs/api/action-sheet
+      -->
+  <form #form="ngForm" (ngSubmit)="Criacao(form);" method="post">
+
+
+    <!--  <ion-avatar slot="start" class="avatar"> -->
+    <ion-grid>
+      <ion-row>
+
+        <ion-col class="ion-text-center">
+          <img src="{{imageFileBase64}}" (click)="seleccionarImagen()" class="back">
+
+        </ion-col>
+        <input #inputcamera type="file" accept="image/*" capture="camera" [hidden]=true />
+
+      </ion-row>
+
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+
+        <ion-col>
+
+          Gerador do exame :
+          <ion-item lines="none">
+            <ion-list>
+              <ion-radio-group>
+
+                <ion-item lines="none">
+                  <ion-label>Atendimento</ion-label>
+                  <ion-radio slot="start" value="atend" (ionSelect)='getAtend($event)' class="radio"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>Paciente</ion-label>
+                  <ion-radio slot="start" value="paciente" (ionSelect)='getPaciente($event)' class="radio"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+
+        </ion-col>
+        <ion-col>
+          Tipo do exame :
+          <ion-item lines="none">
+            <ion-list>
+              <ion-radio-group>
+
+                <ion-item lines="none">
+                  <ion-label>Primeira vez</ion-label>
+                  <ion-radio slot="start" value="Primeira" (ionSelect)='getPrimeira($event)' class="radio"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>Controle</ion-label>
+                  <ion-radio slot="start" value="Controle" (ionSelect)='getControle($event)' class="radio"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-searchbar ngModel placeholder="Codigo do gerador" name="Codigo" (ionChange)='atualizarr(form)'
+      value="{{ Codigo  }}"></ion-searchbar>
+
+
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Nome do paciente" name="Nome" required value="{{ Nome  }}">
+    </ion-input>
+
+
+    <ion-label position="floating">Sobrenome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Sobrenome do paciente " name="SobreNome" required
+      value="{{ SobreNome  }}"></ion-input>
+
+    <ion-label position="floating">CPF do paciente:</ion-label>
+    <ion-input ngModel disabled type="text" placeholder="CPF do paciente " name="CPF" required value="{{ CPF  }}"></ion-input>
+
+    <ion-list>
+      <ion-label position="floating">Sexo do paciente:</ion-label>
+      <ion-select ngModel interface="popover" type="text" name="Sexo" placeholder="Sexo do paciente" value="{{ Sexo }}">
+        <ion-select-option *ngFor="let os of sexos">{{os.Sexo}}</ion-select-option>
+      </ion-select>
+    </ion-list>
+
+
+    <ion-row>
+      Dados analisados :
+      <ion-item lines="none">
+        <ion-list>
+          <ion-radio-group [allowEmptySelection]=true>
+
+            <ion-item lines="none">
+              <ion-label>Vida sexual</ion-label>
+              <ion-radio slot="start" value="vs" class="radio" (ionSelect)='getvs($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-radio-group [allowEmptySelection]=true>
+            <ion-item lines="none">
+              <ion-label>Colesterol</ion-label>
+              <ion-radio slot="start" value="col" class="radio" (ionSelect)='getcol($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-radio-group [allowEmptySelection]=true>
+            <ion-item lines="none">
+              <ion-label>HDL</ion-label>
+              <ion-radio slot="start" value="hdl" class="radio" (ionSelect)='gethdl($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-radio-group [allowEmptySelection]=true>
+            <ion-item lines="none">
+              <ion-label>LDL</ion-label>
+              <ion-radio slot="start" value="ldl" class="radio" (ionSelect)='getldl($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-radio-group [allowEmptySelection]=true>
+            <ion-item lines="none">
+              <ion-label>Triglicerídeos</ion-label>
+              <ion-radio slot="start" value="tri" class="radio" (ionSelect)='gettri($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+
+          <ion-radio-group [allowEmptySelection]=true>
+            <ion-item lines="none">
+              <ion-label>PSA</ion-label>
+              <ion-radio slot="start" value="psa" class="radio" (ionSelect)='getpsa($event)'></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+        </ion-list>
+      </ion-item>
+    </ion-row>
+
+
+    <ion-grid>
+      <ion-label position="floating">Coleta:</ion-label>
+      <ion-row>
+
+        <ion-col>
+
+          <ion-input ngModel type="number" placeholder="CA" name="ca" required value="{{ ca  }}">
+          </ion-input>
+          <ion-input ngModel type="number" placeholder="Glicemia" name="Glicemia" required value="{{ Glicemia  }}">
+          </ion-input>
+        </ion-col>
+
+        <ion-col>
+          <ion-input ngModel type="number" placeholder="Pressão Sistólica" name="ps" required value="{{ ps  }}">
+          </ion-input>
+          <ion-input ngModel type="number" placeholder="Pressão Diastólica" name="pd" required value="{{ pd  }}">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+
+    <div class="ion-text-center">
+
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Salvar</ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

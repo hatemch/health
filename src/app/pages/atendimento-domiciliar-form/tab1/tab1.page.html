@@ -1,0 +1,119 @@
+<ion-header>
+</ion-header>
+
+<ion-content>
+  <mat-expansion-panel >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        FICHA DE ATENDIMENTO DOMICILIAR
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form #form="ngForm" name="frmBasic">
+      <ion-grid>
+
+        <ion-row>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-row>
+              <ion-item>
+                <ion-label position="floating">Latitude</ion-label>
+                <ion-input type="text" name="latitude"
+                           [(ngModel)]="model.latitude"
+                           value="{{model.latitude}}"
+                           disabled ></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-row>
+              <ion-item>
+                <ion-label position="floating">Longitude</ion-label>
+                <ion-input type="text" name="longitude"
+                           [(ngModel)]="model.longitude"
+                           value="{{model.longitude}}"
+                           disabled></ion-input>
+              </ion-item>
+            </ion-row>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+            <ion-button (click)="getLocal()">
+              <ion-icon name="locate"></ion-icon>  
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-item>
+              <ion-label position="floating">CNS do profissional </ion-label>
+              <ion-input type="text"
+                         name="cns_profissional"
+                         [(ngModel)]="model.cns_do_profissional"
+                         value="{{model.cns_do_profissional}}"
+                         required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-item>
+              <ion-label position="floating">CBO</ion-label>
+              <ion-input type="text"
+                         name="cbo"
+                         [(ngModel)]="model.cbo"
+                         value="{{model.cbo}}"
+                         required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-item>
+              <ion-label position="floating">CNES</ion-label>
+              <ion-input type="text"
+                         name="cnes"
+                         [(ngModel)]="model.cnes"
+                         value="{{model.cnes}}"
+                         required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-item>
+              <ion-label position="floating">INE</ion-label>
+              <ion-input type="text"
+                         name="ine"
+                         [(ngModel)]="model.ine"
+                         value="{{model.ine}}"
+                         required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" class="ion-align-self-center">
+            <ion-item>
+              <ion-label position="floating">Data</ion-label>
+              <ion-datetime name="data_atendimento_domiciliar"
+                            display-format="DD/MMMM/YYYY"
+                            cancelText="Desistir"
+                            doneText="Confirmar"
+                            [(ngModel)]="model.data_atendimento_domiciliar"
+                            value="{{model.data_atendimento_domiciliar}}"
+                            required
+                            placeholder=""
+                            monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                            dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado">
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </mat-expansion-panel>
+
+
+  <div fxLayoutAlign="center">
+    <ion-button type="submit" (click) ="onSubmit()" expand="block" color="secondary">
+      Salvar
+    </ion-button>
+    <ion-button type="submit"  expand="block" color="secondary">
+      Cancelar
+    </ion-button>
+  </div>
+</ion-content>

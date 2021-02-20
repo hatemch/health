@@ -1,0 +1,146 @@
+<ion-content>
+    <ion-fab *ngIf="flagForm == false" horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="newCadastroDomiciliarDFamilia()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <!-- #################### Formulario ##################### -->
+    <div *ngIf="flagForm" class="ion-padding">
+        <form #form="ngForm" (ngSubmit)="salvarFamilia(form);" method="post" name="frmCadastroFamilia">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">Número do prontuário familiar</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='15' [(ngModel)]="model.numero_prontuario_familiar"
+                                       name="numero_prontuario_familiar"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">CNS do responsável</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='15' [(ngModel)]="model.cns_responsavel"
+                                       name="cns_responsavel" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                            <ion-icon ios="ios-search" md="md-search" slot="end" (click)="OpenModalResponsavel()"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">Data de nascimento do responsável</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_nascimento_responsavel'
+                                          name="data_nascimento_responsavel" display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir" doneText="Confirmar" placeholder=""
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04">
+                            </ion-datetime>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Renda familiar (sal. mínimo)</ion-label>
+                            <ionic-selectable
+                                    name='renda_familiar'
+                                    [(ngModel)]="renda_familiar"
+                                    [items]="collectionRendaFamiliar"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(renda_familiar, 'renda_familiar')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">Número de membros na família</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='2' [(ngModel)]="model.numero_membros_familia"
+                                       name="numero_membros_familia"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">Reside desde (mês)</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="monthValidation($event.target.value)" maxlength='2' [(ngModel)]="model.reside_desde_mes"
+                                       name="reside_desde_mes"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-label position="floating">Reside desde (ano)</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="yearValidation($event.target.value)" maxlength='4' [(ngModel)]="model.reside_desde_ano"
+                                       name="reside_desde_ano"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagMudou"
+                                        (ionChange)='changeCheck("mudou", "flagMudou")'
+                                        name="mudou"></ion-toggle>
+                            <ion-label>Mudou-se</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             align-self-center>
+                        <ion-button type="submit" expand="block" [disabled]="!form.valid"> Salvar
+                        </ion-button>
+                        <ion-button type="button" expand="block" (click)="goBack()"> Cancelar</ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </div>
+
+    <!-- #################### Listagem da informação ##################### -->
+    <div *ngIf='flagForm == false'>
+        <ion-list>
+            <ion-item *ngFor="let item of collection">
+                <ion-label>
+                    <h3><strong>{{ item.numero_prontuario_familiar }}</strong></h3>
+                    <p><strong>Data de nascimento do responsável:</strong>{{ item.data_nascimento_responsavel }}</p>
+                </ion-label>
+                <ion-buttons>
+                    <ion-button (click)="delete(item.codigo.toString())" slot="end" fill="clear" shape="round"
+                                [disabled]="permissoes.Deletar == 0">
+                        <ion-icon name="trash" color="secondary"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="editar(item)" slot="end" fill="clear" shape="round"
+                                [disabled]="permissoes.Editar == 0">
+                        <ion-icon name="create" ios="ios-create" md="md-create"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <ion-item *ngIf="collection?.length === 0">
+                <ion-label class="ion-text-center">
+                    Nenhum informação para mostrar
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>

@@ -1,0 +1,661 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="delete()">
+        <ion-icon slot="icon-only" name="md-trash"> </ion-icon>
+      </ion-button>
+      <ion-button (click)="goGalleries()">
+        <ion-icon slot="icon-only" ios="ios-images" md="md-images"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ subtitle }}</ion-title>
+  </ion-toolbar>
+  <div class="ion-padding" style="height: 45px">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/atividade-coletiva-form">
+          <ion-icon ios="ios-list" md="md-list"> </ion-icon>
+          <ion-label>Formulário</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)="getAtividadeColetivaID()">
+          <ion-icon ios="ios-people" md="md-people"> </ion-icon>
+          <ion-label>Indivíduos</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
+</ion-header>
+
+<ion-content>
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title> FICHA DE ATIVIDADE COLETIVA </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form #form="ngForm" name="frmBasic">
+      <ion-grid>
+        <!-- <ion-grid *ngFor="let model of models"> -->
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Latitude</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.latitude"
+                name="latitude"
+                disabled
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Longitude</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.longitude"
+                name="longitude"
+                disabled
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            (click)="getCoordinates()"
+            class="ion-padding-top ion-align-self-center"
+            size="2"
+          >
+            <ion-icon
+              class="ion-padding-top"
+              size="large"
+              name="md-locate"
+            ></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNS do profissional* </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cns_profissional"
+                name="cns_profissional"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CBO*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cbo"
+                name="cbo"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="2"
+            offsetMd="2"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNES*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cnes"
+                name="cnes"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="1"
+            offsetMd="1"
+            offsetLg="0"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">INE*</ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.ine"
+                name="ine"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Data*</ion-label>
+              <ion-datetime
+                [(ngModel)]="model.data_cadastro"
+                name="data_cadastro"
+                display-format="DD/MMMM/YYYY"
+                cancelText="Desistir"
+                doneText="Confirmar"
+                required
+                placeholder=""
+                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                value="2019-10-04"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-row>
+                    <ion-col
+                      size-sm="8"
+                      size-md="6"
+                      size-lg="4"
+                      offsetSm="2"
+                      offsetMd="3"
+                      offsetLg="0"
+                      class="ion-align-self-center"
+                      >Profissionais</ion-col
+                    >
+                    <ion-col class="col ion-text-center">
+                      <ion-button
+                        shape="round"
+                        color="white"
+                        size="small"
+                        (click)="OpenModal()"
+                        ><ion-icon name="add"></ion-icon
+                      ></ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <!-- #################### Listagem da informação ##################### -->
+                <div>
+                  <ion-list
+                    *ngFor="let models of modelProfissionais; let i = index"
+                  >
+                    <ion-card>
+                      <ion-card-header> </ion-card-header>
+                      <ion-card-content>
+                        <ion-item lines="none">
+                          <ion-label>
+                            <p>{{ item.cns_profissional }}</p>
+                            <p>{{ item.cbo }}</p>
+                          </ion-label>
+                          <ion-buttons>
+                            <ion-button
+                              (click)="delete(item)"
+                              slot="end"
+                              fill="clear"
+                              shape="round"
+                              [disabled]="item.usuario != CodigoUsuario"
+                            >
+                              <ion-icon
+                                name="trash"
+                                color="secondary"
+                              ></ion-icon>
+                            </ion-button>
+                            <ion-button
+                              (click)="editar(item)"
+                              slot="end"
+                              fill="clear"
+                              shape="round"
+                            >
+                              <ion-icon
+                                name="create"
+                                ios="ios-create"
+                                md="md-create"
+                              ></ion-icon>
+                            </ion-button>
+                          </ion-buttons>
+                        </ion-item>
+                      </ion-card-content>
+                    </ion-card>
+                    <ion-item *ngIf="collectionFilter?.length === 0">
+                      <ion-label class="ion-text-center">
+                        Nenhum informação para mostrar
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-md="3"
+            size-lg="2"
+            offsetSm="2"
+            offsetMd="2"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-label>Turno*</ion-label>
+          </ion-col>
+          <ion-list>
+            <ion-radio-group [(ngModel)]="model.turno" name="turno">
+              <ion-row>
+                <ion-item>
+                  <ion-label>M</ion-label>
+                  <ion-radio value="M"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>T</ion-label>
+                  <ion-radio value="T"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>N</ion-label>
+                  <ion-radio value="N"></ion-radio>
+                </ion-item>
+              </ion-row>
+            </ion-radio-group>
+          </ion-list>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Local de atividade</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="floating"
+                        >N° INEP (Escola/Creche)
+                      </ion-label>
+                      <ion-input
+                        type="text"
+                        [(ngModel)]="model.local_inep"
+                        name="local_inep"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="4"
+                    size-md="3"
+                    size-lg="2"
+                    offsetSm="2"
+                    offsetMd="2"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="floating">CNES</ion-label>
+                      <ion-input
+                        type="text"
+                        [(ngModel)]="model.local_cnes"
+                        name="local_cnes"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="4"
+                    size-md="3"
+                    size-lg="2"
+                    offsetSm="2"
+                    offsetMd="2"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="floating"
+                        >Outra localidade</ion-label
+                      >
+                      <ion-input
+                        type="text"
+                        [(ngModel)]="model.local_outra_localidade"
+                        name="local_outra_localidade"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Reunião</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="stacked">Atividade* </ion-label>
+                      <ion-select
+                        value="{{model.atividade_reuniao}}"
+                        interface="popover"
+                        (ionChange)='changeSelect("atividade_reuniao", $event)'
+                        placeholder="Não informado"
+                        required
+                      >
+                        <ion-select-option
+                          *ngFor="let option of collectionAtividadeReuniao"
+                          value="{{option.id}}"
+                        >
+                          {{option.nome}}</ion-select-option
+                        >
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="stacked"
+                        >Temas para reunião
+                      </ion-label>
+                      <ionic-selectable
+                        name="temas_para_reuniao"
+                        [(ngModel)]="temas_para_reuniao"
+                        [items]="collectionTemasParaReuniao"
+                        itemValueField="id"
+                        itemTextField="nome"
+                        [canSearch]="true"
+                        [isMultiple]="true"
+                        (onChange)="changeSelectTemasParaReuniao(temas_para_reuniao)"
+                        multiple="true"
+                        placeholder="Não informado"
+                      >
+                        <ng-template ionicSelectableCloseButtonTemplate>
+                          <ion-icon
+                            name="close-circle"
+                            style="font-size: 24px"
+                          ></ion-icon>
+                        </ng-template>
+                      </ionic-selectable>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Atendamento</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="stacked">Atividade* </ion-label>
+                      <ion-select
+                        value="{{model.atividade_saude}}"
+                        interface="popover"
+                        (ionChange)='changeSelect("atividade_saude", $event)'
+                        placeholder="Não informado"
+                        required
+                      >
+                        <ion-select-option
+                          *ngFor="let option of collectionAtividadeSaude"
+                          value="{{option.id}}"
+                        >
+                          {{option.nome}}</ion-select-option
+                        >
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="stacked">Público-Avo* </ion-label>
+                      <ionic-selectable
+                        name="publico_alvo"
+                        [(ngModel)]="publico_alvo"
+                        [items]="collectionPublicoAlvo"
+                        itemValueField="id"
+                        itemTextField="nome"
+                        [canSearch]="true"
+                        [isMultiple]="true"
+                        (onChange)="changeSelectPublicoAlvo(publico_alvo)"
+                        placeholder="Não informado"
+                      >
+                        <ng-template ionicSelectableCloseButtonTemplate>
+                          <ion-icon
+                            name="close-circle"
+                            style="font-size: 24px"
+                          ></ion-icon>
+                        </ng-template>
+                      </ionic-selectable>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="stacked"
+                        >Temas para saúde
+                      </ion-label>
+                      <ionic-selectable
+                        name="temas_para_saude"
+                        [(ngModel)]="temas_para_saude"
+                        [items]="collectionTemasParaSaude"
+                        itemValueField="id"
+                        itemTextField="nome"
+                        [canSearch]="true"
+                        [isMultiple]="true"
+                        (onChange)="changeSelectTemasParaSaude(temas_para_saude)"
+                        placeholder="Não informado"
+                      >
+                        <ng-template ionicSelectableCloseButtonTemplate>
+                          <ion-icon
+                            name="close-circle"
+                            style="font-size: 24px"
+                          ></ion-icon>
+                        </ng-template>
+                      </ionic-selectable>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item
+                      *ngIf="model.atividade_saude =='2' || model.atividade_saude =='3'"
+                    >
+                      <ion-label position="stacked"
+                        >Prática em saúde*
+                      </ion-label>
+                      <ionic-selectable
+                        name="pratica_saude"
+                        [(ngModel)]="pratica_saude"
+                        [items]="collectionPraticaSaude"
+                        itemValueField="id"
+                        itemTextField="nome"
+                        [canSearch]="true"
+                        [isMultiple]="true"
+                        (onChange)="changeSelectPraticaSaude(pratica_saude)"
+                        placeholder="Não informado"
+                      >
+                        <ng-template ionicSelectableCloseButtonTemplate>
+                          <ion-icon
+                            name="close-circle"
+                            style="font-size: 24px"
+                          ></ion-icon>
+                        </ng-template>
+                      </ionic-selectable>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">N° de participantes </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.numero_participantes"
+                value="{{model.numero_participantes}}"
+                name="numero_participantes"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Avaliacoas alteradas </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.numero_avaliacoes_alteradas"
+                value="{{model.numero_avaliacoes_alteradas}}"
+                name="numero_avaliacoes_alteradas"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </mat-expansion-panel>
+
+  <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+    <ion-button type="submit" expand="block" (click)="salvar()">
+      Salvar
+    </ion-button>
+    <ion-button type="button" expand="block"> Cancelar </ion-button>
+  </div>
+</ion-content>

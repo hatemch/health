@@ -1,0 +1,1583 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-button (click)="goBack()">
+                <ion-icon name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end" *ngIf="ShowFotos == true">
+            <ion-button (click)="goDeletar()">
+                <ion-icon slot="icon-only" name="md-trash">
+                </ion-icon>
+            </ion-button>
+            <ion-button (click)="gotoCadastroIndividualFotos()">
+                <ion-icon slot="icon-only" ios="ios-images" md="md-images">
+                </ion-icon>
+            </ion-button>
+            <ion-button (click)="goAssinatura()">
+                <ion-icon slot="icon-only" ios="ios-brush" md="md-brush">
+                </ion-icon>
+            </ion-button>
+
+        </ion-buttons>
+        <ion-title>{{ subtitle }}</ion-title>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DADOS BÁSICOS
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form="ngForm" name="frmBasic" (ngSubmit)="salvar()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Latitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.latitude" name="latitude" disabled></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="floating">Longitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.longitude" name="longitude" disabled></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col (click)="getCoordinates()" class="ion-padding-top ion-align-self-center" size="2">
+                        <ion-icon class="ion-padding-top" size="large" name="md-locate"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do profissional</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='15' [(ngModel)]="model.cns_profissional" name="cns_profissional"
+                                       required>
+                            </ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CBO</ion-label>
+                            <ion-input placeholder="Não informado" maxlength='6' type="text"
+                                       (ionBlur)="isNumber($event.target.value)" [(ngModel)]="model.cbo" name="cbo"
+                                       required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNES</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='7' [(ngModel)]="model.cnes" name="cnes" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">INE</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='10' [(ngModel)]="model.ine" name="ine" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_cadastro' name="data_cadastro"
+                                          display-format="DD/MMMM/YYYY" required cancelText="Desistir"
+                                          doneText="Confirmar"
+                                          placeholder=""
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04" required>
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-button type="button" (click)="nextStep()" class="buttons-next" style="margin-left: 55%;">
+                        Próximo
+                        <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                    </ion-button>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                IDENTIFICAÇÃO DO USUÁRIO / CIDADÃO
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form1="ngForm" name="frmIndentificacao">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do ciudadão</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='15' [(ngModel)]="model.cns_cidadao" name="cns_ciudadao"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagResponsavelF"
+                                        (ionChange)='changeCheck("responsavel_familiar", "flagResponsavelF")'
+                                        name="responsavel_familiar"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Ciudadão é o responsável familiar</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf='flagResponsavelF == false'>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Cns do Responsável Familiar</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='15' [(ngModel)]="model.cns_resp_familiar"
+                                       name="cns_resp_familiar"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagForaArea"
+                                        (ionChange)='changeCheck("fora_area", "flagForaArea")'
+                                        name="fora_area"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Fora de área</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Microárea</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='2'
+                                       [(ngModel)]="model.microarea" name="microarea" [disabled]="flagForaArea == true"
+                                       required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"
+                                      [hidden]="flagForaArea === true"></ion-icon>
+                        </ion-item>
+                        <span></span>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome Completo</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'nome_completo')"
+                                       [(ngModel)]="model.nome_completo" name="nome_completo" required>
+                            </ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome Social</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'nome_social')"
+                                       [(ngModel)]="model.nome_social" value="{{model.nome_social}}"
+                                       name="nome_social"></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data de nascimento</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_nascimento' name="data_nascimento"
+                                          display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir" doneText="Confirmar" required placeholder=""
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04">
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Sexo</ion-label>
+                            <ionic-selectable required
+                                              placeholder="Não informado"
+                                              name='sexo'
+                                              [(ngModel)]="sexo"
+                                              [items]="collectionSexo"
+                                              itemValueField="id"
+                                              itemTextField="nome"
+                                              (onChange)="changeSelects(sexo, 'sexo')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Raça/Cor</ion-label>
+                            <ionic-selectable required
+                                              placeholder="Não informado"
+                                              name='raca_cor'
+                                              [(ngModel)]="raca_cor"
+                                              [items]="collectionRacaCor"
+                                              itemValueField="id"
+                                              itemTextField="nome"
+                                              (onChange)="changeSelects(raca_cor, 'raca_cor')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="raca_cor.id === 'indigena'">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Etnia</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'etnia')" [(ngModel)]="model.etnia"
+                                       name="etnia"
+                                       required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">N° NIS(PIS/PASEP)</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='15' [(ngModel)]="model.pis_pasep"
+                                       name="pis_pasep"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label class="ion-text-wrap" position="stacked">Nome completo da mãe</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'nome_mae')"
+                                       [(ngModel)]="model.nome_mae"
+                                       name="nome_mae" [disabled]="flagMae == true" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"
+                                      [hidden]="flagMae === true"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagMae"
+                                        (ionChange)='changeCheck("nome_mae_desconhecido", "flagMae")'
+                                        name="nome_mae_desconhecido"></ion-toggle>
+                            <ion-label>Não consta</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label class="ion-text-wrap" position="stacked">Nome completo do Pai</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'nome_pai')"
+                                       [(ngModel)]="model.nome_pai"
+                                       name="nome_pai" [disabled]="flagPai == true" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"
+                                      [hidden]="flagPai === true"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagPai"
+                                        (ionChange)='changeCheck("nome_pai_desconhecido", "flagPai")'
+                                        name="nome_pai_desconhecido"></ion-toggle>
+                            <ion-label>Não consta</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Nacionalidade</ion-label>
+                            <ionic-selectable required
+                                              placeholder="Não informado"
+                                              name='nacionalidade'
+                                              [(ngModel)]="nacionalidade"
+                                              [items]="collectionNacionalidade"
+                                              itemValueField="id"
+                                              itemTextField="nome"
+                                              (onChange)="changeSelects(nacionalidade, 'nacionalidade')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                            <!--ion-select [(ngModel)]='model.nacionalidade' name='nacionalidade' interface='popover' placeholder="Não informado"
+                                        (ionChange)='changeSelects(nacionalidade, "nacionalidade")' required>
+                              <ion-select-option *ngFor='let option of collectionNacionalidade' value='{{option.id}}'>
+                                {{option.nome}}</ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon-->
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="nacionalidade.id=== 'brasileira'">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>UF de nascimento</ion-label>
+                            <ionic-selectable required
+                                              placeholder="Não informado"
+                                              name='uf_nascimento'
+                                              [(ngModel)]="uf"
+                                              [items]="collectionUfs"
+                                              itemValueField="Sigla"
+                                              itemTextField="Sigla"
+                                              [canSearch]="true"
+                                              (onChange)="changeSelectUf(uf)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Município de nascimento</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'municipio_nascimento')"
+                                       [(ngModel)]="model.municipio_nascimento"
+                                       name="municipio_nascimento"
+                                       required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="nacionalidade.id === 'naturalizado'">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">País de Nascimento</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'pais_nascimento')"
+                                       [(ngModel)]="model.pais_nascimento"
+                                       name="pais_nascimento" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data de naturalizacao</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_naturalizacao' name="data_naturalizacao"
+                                          display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir" doneText="Confirmar" required
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04">
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Portaria de naturalizacao</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'portaria_naturalizacao')"
+                                       [(ngModel)]="model.portaria_naturalizacao"
+                                       name="portaria_naturalizacao"
+                                       required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="nacionalidade.id === 'estrangeiro'">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Pais de Nascimento</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (ionBlur)="validateName($event.target.value, 'pais_nascimento')"
+                                       [(ngModel)]="model.pais_nascimento"
+                                       name="pais_nascimento" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data de entrada no Brasil</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_entrada_brasil' name="data_entrada_brasil"
+                                          display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir" doneText="Confirmar" required
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04">
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Telefone Celular</ion-label>
+                            <ion-input placeholder="Não informado" type="text"
+                                       (keypress)="isNumber2(model.telefone_celular,$event)" maxlength="13"
+                                       [(ngModel)]="model.telefone_celular"
+                                       (ionChange)="model.telefone_celular = formatTelefone(model.telefone_celular)"
+                                       name="telefone_celular"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">E-mail</ion-label>
+                            <ion-input type="email" [(ngModel)]="model.email" value="{{model.email}}" name="email"
+                                       pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                INFORMAÇÕES SOCIODEMOGRÁFICAS
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form2="ngForm" name="frmSociodegraficas">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-text-wrap">Relação de parentesco com o responsável
+                                familiar
+                            </ion-label>
+                            <ion-select value='{{model.parentesco_resp_familiar}}' interface='popover'
+                                        placeholder="Não informado"
+                                        (ionChange)='changeSelect("parentesco_resp_familiar", $event)'>
+                                <ion-select-option *ngFor='let option of collectionParentesco' value='{{option.id}}'>
+                                    {{option.nome}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Ocupação</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.ocupacao" value="{{model.ocupacao}}"
+                                       name="ocupacao"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagFEscola"
+                                        (ionChange)='changeCheck("frequenta_escola_creche", "flagFEscola")'
+                                        name="frequenta_escola_creche"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Frequenta escola ou creche?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-text-wrap">Qual é o curso mais elevado que
+                                frequenta ou frequentou?
+                            </ion-label>
+                            <ion-select value='{{model.curso_mais_elevado}}' interface='popover'
+                                        placeholder="Não informado"
+                                        (ionChange)='changeSelect("curso_mais_elevado", $event)'>
+                                <ion-select-option *ngFor='let option of collectionCurso' value='{{option.id}}'>
+                                    {{option.nome}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked' class="ion-text-wrap">Situação no mercado de trabalho
+                            </ion-label>
+                            <ion-select value='{{model.situacao_mercado_trabalho}}' interface='popover'
+                                        placeholder="Não informado"
+                                        (ionChange)='changeSelect("situacao_mercado_trabalho", $event)'>
+                                <ion-select-option *ngFor='let option of collectionMercadoTrabalho'
+                                                   value='{{option.id}}'>
+                                    {{option.nome}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Criança de 0 a 9 anos, com quem fica?</ion-label>
+                            <!--ionic-selectable
+                                    name='crianca_fica'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="crianca_fica"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [items]="collectionCriancaFica"
+                                    (onChange)="changeSelectCriancaFica(crianca_fica)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='crianca_fica' name="crianca_fica" interface='alert'
+                                        placeholder="Não informado" [multiple]="crianca_fica"
+                                        (ionChange)='changeSelectCriancaFica("crianca_fica", $event)'>
+                                <ion-select-option *ngFor='let option of collectionCriancaFica'
+                                                   value='{{option.id}}'>
+                                    {{option.nome}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagCuidadorT"
+                                        (ionChange)='changeCheck("frequenta_cuidador_tradicional", "flagCuidadorT")'
+                                        name="frequenta_cuidador_tradicional"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Frequenta cuidador tradicional?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagGComunitario"
+                                        (ionChange)='changeCheck("participa_grupo_comunitario", "flagGComunitario")'
+                                        name="participa_grupo_comunitario"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Participa de algum grupo comunitário?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagSaudeP"
+                                        (ionChange)='changeCheck("plano_saude_privado", "flagSaudeP")'
+                                        name="plano_saude_privado"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Possui plano de saúde privado?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagPovoTradic"
+                                        (ionChange)='changeCheck("membro_povo_tradicional", "flagPovoTradic")'
+                                        name="membro_povo_tradicional"></ion-toggle>
+                            <ion-label class="ion-text-wrap">É membro de povo ou comunidade tradicional?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagPovoTradic">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Qual?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.membro_povo_tradicional_desc"
+                                       value="{{model.membro_povo_tradicional_desc}}"
+                                       name="membro_povo_tradicional_desc"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagOrientacaoS"
+                                        (ionChange)='changeCheck("informar_orientacao_sexual", "flagOrientacaoS")'
+                                        name="informar_orientacao_sexual"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Deseja informar orientação sexual?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagOrientacaoS">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Qual ?</ion-label>
+                            <ionic-selectable
+                                    name='orientacao_sexual'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="orientacao_sexual"
+                                    [items]="collectionOrientacaoSexual"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelects(orientacao_sexual,'orientacao_sexual')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagIdentidadeG"
+                                        (ionChange)='changeCheck("informar_identidade_genero", "flagIdentidadeG")'
+                                        name="informar_identidade_genero"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Deseja informar identidade gênero?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagIdentidadeG">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Qual ?</ion-label>
+                            <ionic-selectable
+                                    name='identidade_genero'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="identidade_genero"
+                                    [items]="collectionIdentidadeGenero"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelects(identidade_genero,'identidade_genero')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagDeficiencia"
+                                        (ionChange)='changeCheck("tem_alguma_deficiencia", "flagDeficiencia")'
+                                        name="tem_alguma_deficiencia"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem alguma deficiência?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagDeficiencia">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    required
+                                    name='deficiencia'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="deficiencia"
+                                    [items]="collectionDeficiencia"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectDeficiencia(deficiencia)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='deficiencia' name="deficiencia" interface='alert'
+                                        placeholder="Não informado" [multiple]="deficiencia"
+                                        (ionChange)='changeSelectDeficiencia("deficiencia", $event)'>
+                                <ion-select-option *ngFor='let option of collectionDeficiencia'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                SAÍDA DO CADASTRO
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form3="ngForm" name="frmSaidacadastro">
+            <ion-grid>
+                <ion-row *ngIf="flagObito == false">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagMudanca"
+                                        (ionChange)='changeCheck("saida_cidadao_cadastro", "flagMudanca")'
+                                        name="saida_cidadao_cadastro" required></ion-toggle>
+                            <ion-label>Mudança de território</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="flagMudanca == false">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagObito"
+                                        (ionChange)='changeCheck("saida_cidadao_cadastro", "flagObito")'
+                                        name="saida_cidadao_cadastro" required></ion-toggle>
+                            <ion-label>Óbito</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="flagObito">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data do óbito</ion-label>
+                            <ion-datetime [(ngModel)]='model.saida_cidadao_data_obito' name="saida_cidadao_data_obito"
+                                          display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir" doneText="Confirmar" required placeholder=""
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado">
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Número da DO</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)"
+                                       maxlength='10' [(ngModel)]="model.saida_cidadao_numero_do"
+                                       name="saida_cidadao_numero_do" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                TERMO DE RECUSA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form4="ngForm" name="frmTermorecusa">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagTermoRecusa"
+                                        (ionChange)='changeCheck("termo_recusa", "flagTermoRecusa")'
+                                        name="termo_recusa" required></ion-toggle>
+                            <ion-label class="ion-text-wrap">gozando de plena consciência dos meus atos, recuso este
+                                cadastro, mesmo que isso facilite o acompanhamento a minha saúde e de meus familiares.
+                                Estou ciente de que essa recusa não implicará o não atendimento na unidade de saúde.
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="flagTermoRecusa">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Informe o RG</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.rg_cidadao" value="{{model.rg_cidadao}}"
+                                       name="rg_cidadao" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                CONDIÇÕES/SITUAÇÕES DE SAÚDE GERAIS
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form5="ngForm" name="frmCondicoes">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagGestante"
+                                        (ionChange)='changeCheck("gestante", "flagGestante")'
+                                        name="gestante"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está gestante?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagGestante">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Qual é a maternidade de referência?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.maternidade_referencia"
+                                       value="{{model.maternidade_referencia}}" name="maternidade_referencia"
+                                       required="required"></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Sobre seu peso, você se considera?</ion-label>
+                            <ionic-selectable
+                                    name='peso'
+                                    [(ngModel)]="peso"
+                                    [items]="collectionPeso"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelects(peso, 'peso')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagFumante"
+                                        (ionChange)='changeCheck("fumante", "flagFumante")' name="fumante"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está fumante?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagAlcool"
+                                        (ionChange)='changeCheck("faz_uso_alcool", "flagAlcool")'
+                                        name="faz_uso_alcool"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Faz uso de álcool?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagDrogas"
+                                        (ionChange)='changeCheck("faz_uso_outras_drogas", "flagDrogas")'
+                                        name="faz_uso_outras_drogas"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Faz uso de outras drogas?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagArterial"
+                                        (ionChange)='changeCheck("hipertensao_arterial", "flagArterial")'
+                                        name="hipertensao_arterial"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem hipertensão arterial?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagDiabetes"
+                                        (ionChange)='changeCheck("diabetes", "flagDiabetes")'
+                                        name="diabetes"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem diabetes?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagAvcDerrame"
+                                        (ionChange)='changeCheck("avc_derrame", "flagAvcDerrame")'
+                                        name="avc_derrame"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Teve AVC/derrame?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagInfarto"
+                                        (ionChange)='changeCheck("infarto", "flagInfarto")'
+                                        name="infarto"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Teve infarto?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagDoencaCardiaca"
+                                        (ionChange)='changeCheck("doenca_cardiaca", "flagDoencaCardiaca")'
+                                        name="doenca_cardiaca"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem doença cardíaca/do coração?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagDoencaCardiaca">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Indique qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    required
+                                    name='doenca_cardiaca'
+                                    [(ngModel)]="doenca_cardiaca"
+                                    [items]="collectionDoencaCardiaca"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectDoencaCardiaca(doenca_cardiaca)" required>
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='doenca_cardiaca' name="doenca_cardiaca" interface='alert'
+                                        placeholder="Não informado" [multiple]="doenca_cardiaca"
+                                        (ionChange)='changeSelectDoencaCardiaca("doenca_cardiaca", $event)' required>
+                                <ion-select-option *ngFor='let option of collectionDoencaCardiaca'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagRins"
+                                        (ionChange)='changeCheck("problema_rins", "flagRins")'
+                                        name="problema_rins"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem ou teve problemas nos rins?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagRins">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Indique qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    required
+                                    name='rins'
+                                    [(ngModel)]="rins"
+                                    [items]="collectionProblemaRins"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectProblemaRins(rins)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='rins' name="rins" interface='alert' placeholder="Não informado"
+                                        [multiple]="rins"
+                                        (ionChange)='changeSelectProblemaRins("rins", $event)' required>
+                                <ion-select-option *ngFor='let option of collectionProblemaRins'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagPulmao"
+                                        (ionChange)='changeCheck("doenca_pulmao", "flagPulmao")'
+                                        name="doenca_pulmao"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem doença respiratória/no pulmão?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagPulmao">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Indique qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    name='pulmao'
+                                    [(ngModel)]="pulmao"
+                                    [items]="collectionDoencaPulmao"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectDoencaPulmao(pulmao)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='pulmao' name="pulmao" interface='alert' placeholder="Não informado"
+                                        [multiple]="pulmao"
+                                        (ionChange)='changeSelectDoencaPulmao("pulmao", $event)' required>
+                                <ion-select-option *ngFor='let option of collectionDoencaPulmao'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagHanseniase"
+                                        (ionChange)='changeCheck("hanseniase", "flagHanseniase")'
+                                        name="hanseniase"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está com hanseníase?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagTuberculose"
+                                        (ionChange)='changeCheck("tuberculose", "flagTuberculose")'
+                                        name="tuberculose"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está com tuberculose?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagCancer"
+                                        (ionChange)='changeCheck("cancer", "flagCancer")'
+                                        name="cancer"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem ou teve câncer?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagInterazaoU"
+                                        (ionChange)='changeCheck("internacao_ultimos_doze_meses", "flagInterazaoU")'
+                                        name="internacao_ultimos_doze_meses"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Teve alguma internação nos últimos 12 meses?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagInterazaoU">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Por qual causa?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.internacao_motivo"
+                                       value="{{model.internacao_motivo}}" name="internacao_motivo"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagSaudeMental"
+                                        (ionChange)='changeCheck("problema_saude_mental", "flagSaudeMental")'
+                                        name="problema_saude_mental"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Teve diagnóstico de algum problema de saúde mental por
+                                profissional de saúde?
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagAcamado"
+                                        (ionChange)='changeCheck("acamado", "flagAcamado")'
+                                        name="acamado"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está acamado?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagDomiciliado"
+                                        (ionChange)='changeCheck("domiciliado", "flagDomiciliado")'
+                                        name="domiciliado"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está domiciliado?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagPlantasMed"
+                                        (ionChange)='changeCheck("usa_plantas_medicinais", "flagPlantasMed")'
+                                        name="usa_plantas_medicinais"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Usa plantas medicinais?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagPlantasMed">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Indique qual(is)?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.usa_plantas_medicinais_desc"
+                                       value="{{model.usa_plantas_medicinais_desc}}"
+                                       name="usa_plantas_medicinais_desc"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagOutraPraticas"
+                                        (ionChange)='changeCheck("usa_outras_praticas_complementares", "flagOutraPraticas")'
+                                        name="usa_outras_praticas_complementares"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Usa outras práticas integrativas e complementares?
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagOutraCondicaoS"
+                                        (ionChange)='changeCheck("condicao_saude", "flagOutraCondicaoS")'
+                                        name="conficao_saude"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Outras condições de saúde?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagOutraCondicaoS">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">1 - qual?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.outras_condicoes_saude_1"
+                                       value="{{model.outras_condicoes_saude_1}}"
+                                       name="outras_condicoes_saude_1"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">2 - qual?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.outras_condicoes_saude_2"
+                                       value="{{model.outras_condicoes_saude_2}}"
+                                       name="outras_condicoes_saude_2"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">2 - qual?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.outras_condicoes_saude_3"
+                                       value="{{model.outras_condicoes_saude_3}}"
+                                       name="outras_condicoes_saude_3"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                CIDADÃO EM SITUAÇÃO DE RUA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form6="ngForm" name="frmCidadao">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagSituacaoRua"
+                                        (ionChange)='changeCheck("situacao_de_rua", "flagSituacaoRua")'
+                                        name="situacao_de_rua"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Está em situação de rua?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagSituacaoRua">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Tempo em situação de rua?</ion-label>
+                            <ionic-selectable
+                                    required
+                                    name='situacaorua'
+                                    [(ngModel)]="situacaorua"
+                                    [items]="collectionSituacaoRua"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelects(situacaorua, 'situacaorua')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagBeneficio"
+                                        (ionChange)='changeCheck("recebe_algum_beneficio", "flagBeneficio")'
+                                        name="recebe_algum_beneficio"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Recebe algum benefício?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagReferFam"
+                                        (ionChange)='changeCheck("possui_referencia_familiar", "flagReferFam")'
+                                        name="possui_referencia_familiar"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Possui referência familiar?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Quantas vezes se alimenta ao dia?</ion-label>
+                            <ionic-selectable
+                                    name='quantidade'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="quantidade"
+                                    [items]="collectionQuantidade"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelects(quantidade, 'quantidade')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Qual a origem da alimentação?</ion-label>
+                            <!--ionic-selectable
+                                    name='alimentacao'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="alimentacao"
+                                    [items]="collectionAlimentacao"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectAlimentacao(alimentacao)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='alimentacao' name="alimentacao" interface='alert'
+                                        placeholder="Não informado" [multiple]="alimentacao"
+                                        (ionChange)='changeSelectHigiene("alimentacao", $event)'>
+                                <ion-select-option *ngFor='let option of collectionAlimentacao'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagInstitusion"
+                                        (ionChange)='changeCheck("acompanhado_outra_instituicao", "flagInstitusion")'
+                                        name="acompanhado_outra_instituicao"></ion-toggle>
+                            <ion-label class="ion-text-wrap">É acompanhado por outra instituição?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagInstitusion">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Indique qual(is)?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.acompanhado_outra_instituicao_desc"
+                                       value="{{model.acompanhado_outra_instituicao_desc}}"
+                                       name="acompanhado_outra_instituicao_desc"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagVisitaFamiliar"
+                                        (ionChange)='changeCheck("visita_familiar_frequencia", "flagVisitaFamiliar")'
+                                        name="visita_familiar_frequencia"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Visita algum familiar com frequência?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagVisitaFamiliar">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Qual é o grau de parentesco?</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.grau_parentesco_visita"
+                                       value="{{model.grau_parentesco_visita}}"
+                                       name="grau_parentesco_visita"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagHigiene" required="required"
+                                        (ionChange)='changeCheck("acesso_higiene_pessoal", "flagHigiene")'
+                                        name="acesso_higiene_pessoal"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Tem acesso à higiene pessoal?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagHigiene">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>Indique qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    required
+                                    name='higiene'
+                                    placeholder="Não informado"
+                                    [(ngModel)]="higiene"
+                                    [items]="collectionHigiene"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelectHigiene(higiene)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='higiene' name="higiene" interface='alert'
+                                        placeholder="Não informado" [multiple]="higiene"
+                                        (ionChange)='changeSelectHigiene("higiene", $event)' required>
+                                <ion-select-option *ngFor='let option of collectionHigiene'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <div>
+        <ion-button type="submit" expand="block" [disabled]="!form.valid || !form1.valid ||  !form2.valid ||  !form3.valid ||  !form4.valid ||  !form5.valid ||  !form6.valid"
+                    (click)="salvar()"> Salvar
+        </ion-button>
+        <ion-button type="button" expand="block" (click)="goBack()"> Cancelar</ion-button>
+    </div>
+</ion-content>
+

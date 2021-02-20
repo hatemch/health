@@ -1,0 +1,23 @@
+.buttons-next{
+  --background:  #7CBBBA;
+}
+.buttons-prev{
+  --background:  #7CBBBA;
+}
+.error-message {
+  color: var(--ion-color-danger);
+}
+
+.icono-alert {
+  display: none;
+}
+
+.ion-invalid .icono-alert {
+  display: block;
+  color: var(--ion-color-danger);
+}
+
+.ionic-selectable-has-value .icono-select{
+  display: none;
+}
+

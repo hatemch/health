@@ -1,0 +1,37 @@
+ion-header{
+  --ion-background-color:#589191;
+}
+
+ion-title{
+  color: rgb(253, 253, 253);
+  font-size: 18px;
+}
+
+.fieldsetform {
+  border-radius: 10px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.buttons-next{
+  --background:  #7CBBBA;
+}
+.buttons-prev{
+  --background:  #7CBBBA;
+}
+.error-message {
+  color: var(--ion-color-danger);
+}
+
+.icono-alert {
+  display: none;
+}
+
+.ion-invalid .icono-alert {
+  display: block;
+  color: var(--ion-color-danger);
+}
+
+.ionic-selectable-has-value .icono-select{
+  display: none;
+}

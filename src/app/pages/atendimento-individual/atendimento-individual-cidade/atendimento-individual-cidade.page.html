@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+  <div class="ion-padding" style="height: 45px">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/atendimento-individual-form/:codigo">
+          <ion-icon ios="ios-list" md="md-list"> </ion-icon>
+          <ion-label>Formulário</ion-label>
+        </ion-tab-button>
+        <ion-tab-button routerLink="/atividade-coletiva-individuo-list/:codigo">
+          <ion-icon ios="ios-people" md="md-people"> </ion-icon>
+          <ion-label>Indivíduos</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button
+        color="light"
+        (click)="sincronizarAtendimentoIndividualCidadao()"
+      >
+        <ion-icon ios="ios-sync" md="md-sync"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="newAtendimentoIndividualCidadao()">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- #################### Listagem da informação ##################### -->
+  <div>
+    <ion-list *ngFor="let item of collectionFilter; let i = index">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title class="ion-text-center"
+            >CNS do Cidadão::{{ item.cns_cidadao }}</ion-card-title
+          >
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none">
+            <ion-label>
+              <p>
+                <strong>Data de nascimento :</strong>{{ item.data_nascimento }}
+              </p>
+              <p><strong>Sexo :</strong>{{ item.sexo }}</p>
+              <p>
+                <strong>Local de atendimento :</strong>{{ item.local_atendimento
+                }}
+              </p>
+            </ion-label>
+            <ion-buttons>
+              <ion-button
+                (click)="editar(item)"
+                slot="end"
+                fill="clear"
+                shape="round"
+              >
+                <ion-icon
+                  name="create"
+                  ios="ios-create"
+                  md="md-create"
+                ></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-item *ngIf="collectionFilter?.length === 0">
+        <ion-label class="ion-text-center">
+          Nenhum informação para mostrar
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

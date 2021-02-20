@@ -1,0 +1,839 @@
+<ion-content>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DADOS BÁSICOS
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form="ngForm" name="frmBasic">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Latitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.latitude" value="{{model.latitude}}"
+                                       name="latitude" disabled></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="floating">Longitude</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.longitude" value="{{model.longitude}}"
+                                       name="longitude" disabled></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col (click)="getCoordinates()" class="ion-padding-top ion-align-self-center" size="2">
+                        <ion-icon class="ion-padding-top" size="large" name="md-locate"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do profissional</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='15'[(ngModel)]="model.cns_profissional" name="cns_profissional"
+                                       required>
+                            </ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CBO</ion-label>
+                            <ion-input  placeholder="Não informado" maxlength='6' type="text" (ionBlur)="isNumber($event.target.value)" [(ngModel)]="model.cbo" name="cbo" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNES</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='7' [(ngModel)]="model.cnes" name="cnes" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">INE</ion-label>
+                            <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='10'[(ngModel)]="model.ine" name="ine" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data</ion-label>
+                            <ion-datetime [(ngModel)]='model.data_cadastro' name="data_cadastro"
+                                          display-format="DD/MMMM/YYYY" required cancelText="Desistir" doneText="Confirmar"
+                                          placeholder=""
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04"required>
+                            </ion-datetime>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-button type="button" (click)="nextStep()" class="buttons-next" style="margin-left: 55%;">
+                        Próximo
+                        <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                    </ion-button>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                ENDEREÇO/LOCAL DE PERMANÊNCIA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form1="ngForm" name="frmEndereco">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CEP</ion-label>
+                            <ion-input placeholder="Não informado" maxlength='8' type="text" (ionBlur)="isNumber($event.target.value)"  [(ngModel)]="model.cep" name="cep" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position='stacked'>UF</ion-label>
+                            <ionic-selectable required
+                                              placeholder="Não informado"
+                                              name='uf_nascimento'
+                                              [(ngModel)]="uf"
+                                              [items]="collectionUfs"
+                                              itemValueField="Sigla"
+                                              itemTextField="Sigla"
+                                              [canSearch]="true"
+                                              (onChange)="changeSelectUf(uf)">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Município</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.municipio" value="{{model.municipio}}"
+                                       name="municipio" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Bairro</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.bairro" value="{{model.bairro}}" name="bairro"
+                                       required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Tipo de logradouro</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.tipo_logradouro" value="{{model.tipo_logradouro}}"
+                                       name="tipo_logradouro" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Logradouro</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.nome_logradouro" value="{{model.nome_logradouro}}"
+                                       name="nome_logradouro" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagSemNumero"
+                                        (ionChange)='changeCheck("sem_numero", "flagSemNumero")'
+                                        name="sem_numero"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Sem número</ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Número</ion-label>
+                            <ion-input placeholder="Não informado" maxlength='5' type="text" (ionBlur)="isNumber($event.target.value)" [(ngModel)]="model.numero" name="numero" [disabled]="flagSemNumero === true" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end" [hidden]="flagSemNumero === true"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Complemento</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.complemento" value="{{model.complemento}}"
+                                       name="complemento"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating"> Ponto de referência</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.ponto_referencia"
+                                       value="{{model.ponto_referencia}}" name="ponto_referencia"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagForaArea"
+                                        (ionChange)='changeCheck("fora_area", "flagForaArea")'
+                                        name="fora_area"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Fora de área</ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Microárea</ion-label>
+                            <ion-input placeholder="Não informado" maxlength='2' type="text" (ionBlur)="isNumber($event.target.value)" [(ngModel)]="model.microarea"
+                                       name="microarea"   [disabled]="flagForaArea == true" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end" [hidden]="flagForaArea === true"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Tipo de imóvel</ion-label>
+                            <ionic-selectable
+                                    required
+                                    placeholder="Não informado"
+                                    name='tipo_imovel'
+                                    [(ngModel)]="tipo_imovel"
+                                    [items]="collectionTipoImovel"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(tipo_imovel,'tipo_imovel')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Telefone residencial</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.telefone_residencial" (keypress)="isNumber2(model.telefone_residencial,$event)" maxlength="12"
+                                       (ionChange)="model.telefone_residencial = formatTelefone(model.telefone_residencial)" name="telefone_residencial"
+                                       ></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Telefone de contato</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.telefone_contato" (keypress)="isNumber2(model.telefone_contato,$event)" maxlength="12"
+                                       (ionChange)="model.telefone_contato = formatTelefone(model.telefone_contato)" name="telefone_contato"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                    <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                        Anterior
+                        <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                    </ion-button>
+                    <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                        Próximo
+                        <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                    </ion-button>
+                </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                CONDIÇÕES DE MORADIA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form2="ngForm" name="frmCondicoesMoradia">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Situação de moradia/Posse da terra*</ion-label>
+                            <ionic-selectable
+                                    required
+                                    placeholder="Não informado"
+                                    name='situacao_moradia'
+                                    [(ngModel)]="situacao_moradia"
+                                    [items]="collectionSituacaoMoradia"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(situacao_moradia, 'situacao_moradia')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Localização</ion-label>
+                            <ionic-selectable
+                                    required
+                                    placeholder="Não informado"
+                                    name='localizacao'
+                                    [(ngModel)]="localizacao"
+                                    [items]="collectionLocalizacao"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(localizacao, 'localizacao')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                                <ng-template ionicSelectableIconTemplate>
+                                    <ion-icon class="icono-select" color="danger" name="alert"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Tipo de domicílio</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='tipo_domicilio'
+                                    [(ngModel)]="tipo_domicilio"
+                                    [items]="collectionTipoDomicilio"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(tipo_domicilio, 'tipo_domicilio')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Número moradores</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.numero_moradores" maxlength='4' (ionBlur)="isNumber($event.target.value)"
+                                       name="numero_moradores"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Número cômodos</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.numero_comodos" maxlength='4' (ionBlur)="isNumber($event.target.value)"
+                                       name="numero_comodos"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Tipo de acesso ao domicílio</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='tipo_acesso_domicilio'
+                                    [(ngModel)]="tipo_acesso_domicilio"
+                                    [items]="collectionAccesoDomicilio"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(tipo_acesso_domicilio, 'tipo_acesso_domicilio')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagEnergia"
+                                        (ionChange)='changeCheck("energia_eletrica", "flagEnergia")'
+                                        name="energia_eletrica"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Disponibilidade de energia elétrica?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <fieldset class="fieldsetform">
+                            <ion-item-divider>
+                                <ion-label class="ion-text-wrap">MATERIAL PREDOMINANTE NA CONSTRUÇÃO DAS PAREDES
+                                    EXTERNAS DE SEU DOMICÍLIO
+                                </ion-label>
+                            </ion-item-divider>
+                            <ion-item>
+                                <ion-label position="stacked">Alvenaria/Tijolo</ion-label>
+                                <ionic-selectable
+                                        placeholder="Não informado"
+                                        name='material_predominante_alvenaria'
+                                        [(ngModel)]="parede_alvenaria"
+                                        [items]="collectionParedeAlvenaria"
+                                        itemValueField="id"
+                                        itemTextField="nome"
+                                        [canSearch]="true"
+                                        (onChange)="changeSelect(parede_alvenaria, 'parede_alvenaria')">
+                                    <ng-template ionicSelectableCloseButtonTemplate>
+                                        <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                    </ng-template>
+                                </ionic-selectable>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Taipa</ion-label>
+                                <ionic-selectable
+                                        placeholder="Não informado"
+                                        name='material_predominante_taipa'
+                                        [(ngModel)]="parede_taipa"
+                                        [items]="collectionParedeTaipa"
+                                        itemValueField="id"
+                                        itemTextField="nome"
+                                        [canSearch]="true"
+                                        (onChange)="changeSelect(parede_taipa, 'parede_taipa')">
+                                    <ng-template ionicSelectableCloseButtonTemplate>
+                                        <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                    </ng-template>
+                                </ionic-selectable>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Outros</ion-label>
+                                <ionic-selectable
+                                        placeholder="Não informado"
+                                        name='material_predominante_outros'
+                                        [(ngModel)]="parede_outros"
+                                        [items]="collectionParedeOutros"
+                                        itemValueField="id"
+                                        itemTextField="nome"
+                                        [canSearch]="true"
+                                        (onChange)="changeSelect(parede_outros, 'parede_outros')">
+                                    <ng-template ionicSelectableCloseButtonTemplate>
+                                        <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                    </ng-template>
+                                </ionic-selectable>
+                            </ion-item>
+                        </fieldset>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Abastecimento de água</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='abastecimento_agua'
+                                    [(ngModel)]="abastecimento_agua"
+                                    [items]="collectionAbastecimentoAgua"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(abastecimento_agua, 'abastecimento_agua')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Forma de escoamento do banheiro ou sanitário</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='forma_escoamento_banheiro'
+                                    [(ngModel)]="forma_escoamento_banheiro"
+                                    [items]="collectionEscoamentoBanheiro"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(forma_escoamento_banheiro, 'forma_escoamento_banheiro')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Água para consumo no domicílio</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='agua_consumo_domicilio'
+                                    [(ngModel)]="agua_consumo_domicilio"
+                                    [items]="collectionConsumoAgua"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(agua_consumo_domicilio, 'agua_consumo_domicilio')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Destino do lixo</ion-label>
+                            <ionic-selectable
+                                    placeholder="Não informado"
+                                    name='destino_lixo'
+                                    [(ngModel)]="destino_lixo"
+                                    [items]="collectionDestinoLixo"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    (onChange)="changeSelect(destino_lixo, 'destino_lixo')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagAnimais"
+                                        (ionChange)='changeCheck("tem_animal", "flagAnimais")'
+                                        name="tem_animal"></ion-toggle>
+                            <ion-label class="ion-text-wrap">Animais no domicílio?</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagAnimais">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Qual(is)?</ion-label>
+                            <!--ionic-selectable
+                                    name='animal'
+                                    [(ngModel)]="animal"
+                                    [items]="collectionAnimal"
+                                    itemValueField="id"
+                                    itemTextField="nome"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    (onChange)="changeSelect(animal,'animal')">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable-->
+                            <ion-select [(ngModel)]='animal' name="animal" interface='alert' placeholder="Não informado" [multiple] = "animal"
+                                        (ionChange)='changeSelectAnimal("animal", $event)' >
+                                <ion-select-option *ngFor='let option of collectionAnimal'
+                                                   value='{{option.id}}'> {{option.nome}} </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagAnimais">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Quantos?</ion-label>
+                            <ion-input type="number" [(ngModel)]="model.animal_total" maxlength='3' (ionBlur)="isNumber($event.target.value)"
+                                       name="animal_total" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                TERMO DE RECUSA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form3="ngForm" name="frmTermoRecusa">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagTermoRecusa"
+                                        (ionChange)='changeCheck("termo_recusa", "flagTermoRecusa")'
+                                        name="termo_recusa" required></ion-toggle>
+                            <ion-label class="ion-text-wrap">gozando de plena consciência dos meus atos, recuso este
+                                cadastro, mesmo que isso facilite o acompanhamento a minha saúde e de meus familiares.
+                                Estou ciente de que essa recusa não implicará o não atendimento na unidade de saúde.
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagTermoRecusa">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.termo_recusa_nome"
+                                       name="termo_recusa_nome" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagTermoRecusa">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Informe o RG</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.termo_recusa_rg"
+                                       name="termo_recusa_rg" required=""></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                INSTITUIÇÃO DE PERMANÊNCIA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form4="ngForm" name="frmInstitucaoP">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome da instituição de permanência</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.nome_instituicao_permanencia"
+                                       value="{{model.nome_instituicao_permanencia}}"
+                                       name="nome_instituicao_permanencia"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagTemOutroProf"
+                                        (ionChange)='changeCheck("tem_outros_profissionais_saude", "flagTemOutroProf")'
+                                        name="tem_outros_profissionais_saude" required></ion-toggle>
+                            <ion-label class="ion-text-wrap">Existem outros profissionais de saúde vinculados à
+                                instituição (não inclui profissionais da rede pública de saúde)?
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagTemOutroProf">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <fieldset class="fieldsetform">
+                            <ion-item-divider>
+                                <ion-label class="ion-text-wrap">IDENTIFICAÇÃO DO RESPONSÁVEL TÉCNICO DA INSTITUIÇÃO DE
+                                    PERMANÊNCIA
+                                </ion-label>
+                            </ion-item-divider>
+                            <ion-item>
+                                <ion-label position="floating">Nome</ion-label>
+                                <ion-input type="text" [(ngModel)]="model.responsavel_tecnico_nome"
+                                           value="{{model.responsavel_tecnico_nome}}"
+                                           name="responsavel_tecnico_nome"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="floating">CNS do responsável</ion-label>
+                                <ion-input placeholder="Não informado" type="text" (ionBlur)="isNumber($event.target.value)" maxlength='15' [(ngModel)]="model.responsavel_tecnico_cns"
+                                           value="{{model.responsavel_tecnico_cns}}"
+                                           name="responsavel_tecnico_cns"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="floating">Cargo na instituição</ion-label>
+                                <ion-input type="text" [(ngModel)]="model.responsavel_tecnico_cargo"
+                                           value="{{model.responsavel_tecnico_cargo}}"
+                                           name="responsavel_tecnico_cargo"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="floating">Telefone contato</ion-label>
+                                <ion-input type="text" [(ngModel)]="model.responsavel_tecnico_telefone" (keypress)="isNumber2(model.responsavel_tecnico_telefone,$event)"
+                                           (ionChange)="model.responsavel_tecnico_telefone = formatTelefone(model.responsavel_tecnico_telefone)" maxlength="12"
+                                           name="responsavel_tecnico_telefone"></ion-input>
+                            </ion-item>
+                        </fieldset>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                        <ion-button class="buttonscenter" type="button" (click)="nextStep()" class="buttons-next">
+                            Próximo
+                            <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" slot="end"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                TERMO DE RECUSA DA INSTITUIÇÃO DE PERMANÊNCIA
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form5="ngForm" name="frmTermoRecusaIns">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-toggle color="primary" slot="end" [(ngModel)]="flagTermoRecusaInstitucao"
+                                        (ionChange)='changeCheck("termo_recusa_instituicao_permanencia", "flagTermoRecusaInstitucao")'
+                                        name="termo_recusa_instituicao_permanencia" required></ion-toggle>
+                            <ion-label class="ion-text-wrap">responsável técnico pela instituição, recuso este cadastro,
+                                mesmo que essa recusa dificulte o acompanhamento da saúde das pessoas
+                                abrigadas/residentes
+                                nesta instituição. Estou ciente de que esta recusa não implicará o não atendimento pela
+                                equipe de saúde.
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagTermoRecusaInstitucao">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Nome</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.termo_recusa_instituicao_permanencia_nome" value="{{model.termo_recusa_instituicao_permanencia_nome}}"
+                                       name="termo_recusa_instituicao_permanencia_nome" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="flagTermoRecusaInstitucao">
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Informe o RG</ion-label>
+                            <ion-input type="text" [(ngModel)]="model.termo_recusa_instituicao_permanencia_rg"
+                                       name="termo_recusa_instituicao_permanencia_rg" required></ion-input>
+                            <ion-icon class="icono-alert" ios="ios-alert" md="md-alert" slot="end"></ion-icon>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-self-end">
+                    <ion-col width-50 style="text-align: center">
+                        <ion-button class="buttonscenter" type="button" (click)="prevStep()" class="buttons-prev">
+                            Anterior
+                            <ion-icon ios="ios-arrow-back" md="md-arrow-back" slot="start"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+    <div>
+        <ion-button type="submit" expand="block" [disabled]="!form.valid || !form1.valid ||  !form2.valid ||  !form3.valid ||  !form4.valid ||  !form5.valid"
+                    (click)="salvar()"> Salvar
+        </ion-button>
+        <ion-button type="button" expand="block" (click)="goBack()"> Cancelar</ion-button>
+    </div>
+
+</ion-content>

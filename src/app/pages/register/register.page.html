@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Criar Conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="GravarDados(form)" method="post">
+
+    <ion-grid>
+      <ion-row>
+
+        <ion-col class="ion-text-center">
+          <ion-avatar class="ava">
+            <img src="{{imageFileBase64}}" (click)="seleccionarImagen()">
+          </ion-avatar>
+
+        </ion-col>
+        <input #inputcamera type="file" accept="image/*" capture="camera" [hidden]=true />
+
+      </ion-row>
+
+    </ion-grid>
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input #Nome ngModel type="text" placeholder="Primeiro Nome" name="Nome" required value="{{ Nome  }}">
+    </ion-input>
+
+
+
+    <ion-label position="floating">Sobrenome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Informe Sobrenome " name="SobreNome" required value="{{ SobreNome  }}">
+    </ion-input>
+
+    <ion-label position="floating">Data de nascimento</ion-label>
+    <ion-datetime [(ngModel)] = "Datadenascimento" doneText='OK' cancelText='CANCELAR'   displayFormat="DD/MM/YYYY" placeholder="DD/MM/AAAA "  name="Datadenascimento" required >
+    </ion-datetime>
+
+
+
+    <ion-list>
+
+      <ion-label position="floating">Sexo:</ion-label>
+      <ion-select ngModel interface="popover" name="sex" placeholder="Selecione o Sexo..." value="{{ Sexo  }}">
+        <ion-select-option *ngFor="let os of sexos">{{os.sexo}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+
+
+    <ion-list>
+
+      <ion-label position="floating">RH:</ion-label>
+      <ion-select ngModel interface="popover" name="R" placeholder="Selecione o RH..." value="{{ RH  }}">
+        <ion-select-option *ngFor="let os of RHs">{{os.RH}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+    <ion-list>
+
+      <ion-label position="floating">Posição:</ion-label>
+      <ion-select ngModel interface="popover" name="pos" placeholder="Selecione o Posição..." value="{{ pos  }}">
+        <ion-select-option *ngFor="let os of poss">{{os.pos}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+    <ion-label position="floating">Email:</ion-label>
+    <ion-input #email ngModel type="email" name="email" pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}"
+      required value="{{ Email  }}"></ion-input>
+
+    <ion-label position="floating">Senha:</ion-label>
+    <ion-input ngModel type="password" placeholder="Digite a Senha" name="Senha" required>
+    </ion-input>
+
+    <ion-label position="floating">Repita a Senha:</ion-label>
+    <ion-input ngModel type="password" placeholder="Repita a Senha" name="ReSenha" required>
+    </ion-input>
+
+
+    <div class="ion-text-center">
+      <ion-button type="submit" [disabled]="!form.valid" class="sol_but">Solicitar Cadastro</ion-button>
+    </div>
+  </form>
+
+
+</ion-content>

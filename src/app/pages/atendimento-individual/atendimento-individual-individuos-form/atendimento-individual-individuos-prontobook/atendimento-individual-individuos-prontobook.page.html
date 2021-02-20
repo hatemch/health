@@ -1,0 +1,262 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{ subtitle }}</ion-title>
+  </ion-toolbar>
+  <div class="ion-padding" style="height: 45px">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/atendimento-individual-form">
+          <ion-icon ios="ios-list" md="md-list"> </ion-icon>
+          <ion-label>Formulário</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)="getAtendimentoIndividualID()">
+          <ion-icon ios="ios-people" md="md-people"> </ion-icon>
+          <ion-label>Indivíduos</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </div>
+</ion-header>
+
+<ion-content>
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <strong>AGENDAMENTO PRONTOBOOK</strong>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form #form="ngForm" name="frmFicha">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNS do cidadão* </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cns_cidadao"
+                value="{{model.cns_cidadao}}"
+                name="cns_cidadao"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="stacked">Hospital* </ion-label>
+              <!-- <ion-select
+                value="{{model.hospital}}"
+                interface="popover"
+                (ionChange)='changeSelect("hospital", $event)'
+                placeholder="Não informado"
+                required
+              >
+                <ion-select-option
+                  *ngFor="let option of collectionHospital"
+                  value="{{option.nome}}"
+                >
+                  {{option.nome}}</ion-select-option
+                >
+              </ion-select> -->
+              <ionic-selectable
+                #nasf_poloComponent
+                item-content
+                name="hospital"
+                [(ngModel)]="model.hospital"
+                [items]="collectionHospital"
+                itemValueField="id"
+                itemTextField="nome"
+                (onChange)="changeSelectHospital(hospital)"
+                [canSearch]="true"
+                placeholder="Não informado"
+              >
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon
+                    name="close-circle"
+                    style="font-size: 24px"
+                  ></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="stacked">Especialidade* </ion-label>
+              <!-- <ion-select
+                value="{{model.especialidade}}"
+                interface="popover"
+                (ionChange)='changeSelect("especialidade", $event)'
+                placeholder="Não informado"
+                required
+              >
+                <ion-select-option
+                  *ngFor="let option of collectionEspecialidade"
+                  value="{{option.nome}}"
+                >
+                  {{option.nome}}</ion-select-option
+                >
+              </ion-select> -->
+              <ionic-selectable
+                #nasf_poloComponent
+                item-content
+                name="especialidade"
+                [(ngModel)]="model.especialidade"
+                [items]="collectionEspecialidade"
+                itemValueField="id"
+                itemTextField="nome"
+                (onChange)="changeSelectEspecialidade(especialidade)"
+                [canSearch]="true"
+                placeholder="Não informado"
+              >
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon
+                    name="close-circle"
+                    style="font-size: 24px"
+                  ></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="stacked">Médico* </ion-label>
+              <!-- <ion-select
+                value="{{model.medico}}"
+                interface="popover"
+                (ionChange)='changeSelect("medico", $event)'
+                placeholder="Não informado"
+              >
+                <ion-select-option
+                  *ngFor="let option of collectionMedico"
+                  value="{{option.nome}}"
+                >
+                  {{option.nome}}</ion-select-option
+                >
+              </ion-select> -->
+              <ionic-selectable
+                #nasf_poloComponent
+                item-content
+                name="medico"
+                [(ngModel)]="model.medico"
+                [items]="collectionMedico"
+                itemValueField="id"
+                itemTextField="nome"
+                (onChange)="changeSelectMedico(medico)"
+                [canSearch]="true"
+                placeholder="Não informado"
+              >
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon
+                    name="close-circle"
+                    style="font-size: 24px"
+                  ></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Data do agendamento*</ion-label>
+              <ion-datetime
+                [(ngModel)]="model.data_agendamento"
+                name="data_agendamento"
+                display-format="DD/MMMM/YYYY"
+                cancelText="Desistir"
+                doneText="Confirmar"
+                required
+                placeholder=""
+                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                value="2019-10-04"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="0"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Hora do agendamento </ion-label>
+              <ion-datetime
+                ngModel
+                name="Hora_agendamento"
+                display-format="HH:mm:ss"
+                picker-format="HH:mm:ss"
+                cancelText="Desistir"
+                placeholder=""
+                doneText="Confirmar"
+                value="2019-10-04T00:00Z"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </mat-expansion-panel>
+  <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+    <ion-button type="submit" expand="block" (click)="salvar()">
+      Salvar
+    </ion-button>
+    <ion-button type="button" expand="block"> Cancelar </ion-button>
+  </div>
+</ion-content>

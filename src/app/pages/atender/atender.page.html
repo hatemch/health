@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Atendimento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="Criacao(form);" method="post">
+
+    <div>
+      <ion-card *ngFor="let sa of result " class="card">
+        <ion-card-header>
+          <ion-card-title>
+            <tr>
+              Atendimento nº : {{sa.id}}
+            </tr>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="container">
+          <div class="container">
+
+            <ion-grid>
+              <ion-row>
+                <ion-col id="{{sa.CPF}}">
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>Paciente:</ion-label>
+                    {{sa.name}} {{sa.last_name}}
+                  </ion-item>
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>E-mail:</ion-label>
+                    {{sa.email}}
+                  </ion-item>
+
+                  
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+
+    <ion-label position="floating">Descrição:</ion-label>
+    <ion-input ngModel type="text" placeholder="Informe Descrição " name="desc" required value="{{ desc  }}">
+    </ion-input>
+
+    <ion-label position="floating">Sintomas:</ion-label>
+    <ion-input ngModel type="text" placeholder="Informe Sintomas " name="Sintomas" required value="{{ Sintomas  }}">
+    </ion-input>
+
+    <ion-label position="floating">Diagnósticos:</ion-label>
+    <ion-input ngModel type="text" placeholder="Informe Diagnósticos " name="Diagnosticos" required
+      value="{{ Diagnosticos  }}"></ion-input>
+
+
+    <ion-button type="submit" [disabled]="!form.valid"  class="at_but">Salvar</ion-button>
+  </form>
+</ion-content>
+
+
+<!--<ion-button type="submit"  (click)="delete(sa.code)"   expand="full" class="at_but">delete</ion-button>-->

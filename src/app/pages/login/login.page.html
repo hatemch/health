@@ -1,0 +1,50 @@
+<!-- <ion-header>
+  <ion-toolbar>
+
+  </ion-toolbar>
+</ion-header> -->
+<!--
+<ion-button expand="block" routerLink="/menu/first">Conectar</ion-button>
+-->
+<ion-content padding>
+  <ion-row text-center>
+    <ion-col><img src="/assets/imgs/appicon.png" width="200px" height="200px"></ion-col>
+  </ion-row>
+
+  <ion-grid>
+    <!--
+      <ion-row text-center>
+          <ion-col><img src="/assets/imgs/LgECupom33.png"  width="100px" height="100px"></ion-col>
+      </ion-row>
+      -->
+    <h3 text-center class="title" autofocus>SAUDE</h3>
+  </ion-grid>
+
+
+  <form #form="ngForm" (ngSubmit)="AuthLogin(form)" method="post">
+
+    <ion-label position="floating">Email</ion-label>
+    <ion-input #email ngModel type="email" name="email" pattern="[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}"
+      required></ion-input>
+
+
+
+    <ion-label position="floating">Senha</ion-label>
+    <ion-input ngModel type="password" name="password" required></ion-input>
+
+
+    <p text-right>
+      <a [routerLink]="['/recuperasenha']" [state]="{param: 123}">
+        Esqueceu a senha?
+      </a>
+    </p>
+    <div class="ion-text-center">
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Entrar</ion-button>
+    </div>
+  </form>
+  <div class="ion-text-center">
+    <ion-button [routerLink]="['/register']" class="at_but">Criar Conta</ion-button>
+  </div>
+
+
+</ion-content>

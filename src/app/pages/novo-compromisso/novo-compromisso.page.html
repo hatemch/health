@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Novo Compromisso</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <!--
+    Use a documentação para construir os componestes
+    https://ionicframework.com/docs/api/action-sheet
+  -->
+  <form #form="ngForm" (ngSubmit)="Criacao(form);" method="post">
+
+    <ion-searchbar ngModel placeholder="Codigo do gerador" name="Codigo" (ionChange)='atualizarr(form)'
+      value="{{ Codigo  }}"></ion-searchbar>
+
+
+    <ion-label position="floating">Nome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Nome do paciente" name="Nome" required value="{{ Nome  }}"> </ion-input>
+
+    <ion-label position="floating">Sobrenome:</ion-label>
+    <ion-input ngModel type="text" placeholder="Sobrenome do paciente " name="SobreNome" required
+      value="{{ SobreNome  }}"></ion-input>
+
+    <ion-label position="floating">CPF:</ion-label>
+    <ion-input ngModel type="text" disabled placeholder="CPF do paciente " name="CPF" required value="{{ CPF  }}">
+    </ion-input>
+
+
+    <ion-list>
+
+      <ion-label position="floating">Sexo:</ion-label>
+      <ion-select ngModel type="text" interface="popover" name="Sexo" placeholder="Sexo do paciente" value="{{ Sexo }}">
+        <ion-select-option *ngFor="let os of sexos">{{os.Sexo}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+
+    <ion-list>
+
+      <ion-label position="floating">Hospitais:</ion-label>
+      <ion-select ngModel type="text" interface="popover" name="Hospitais" placeholder="Selecione o Hospital..."
+        value="{{ Hospitais }}">
+        <ion-select-option *ngFor="let os of a">{{os.nome}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+    <ion-list>
+
+      <ion-label position="floating">Especialidades:</ion-label>
+      <ion-select ngModel type="text" interface="popover" name="Especialidades"
+        placeholder="Selecione o Especialidades..." value="{{ Especialidades }}">
+        <ion-select-option *ngFor="let os of b">{{os.nome}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+
+    <ion-list>
+
+      <ion-label position="floating">Doutor:</ion-label>
+      <ion-select [(ngModel)]='Doutor' interface="popover" type="text" name="Doutor" placeholder="Selecione o Doutor...">
+        <ion-select-option *ngFor="let os of c">{{os.Nome}} {{os.SobreNome}}</ion-select-option>
+      </ion-select>
+
+    </ion-list>
+
+    <ion-label position="floating">Data Do Atendimento:</ion-label>
+    <ion-datetime [(ngModel)]='DataDoAtendimento' displayFormat="DD/MM/YYYY" doneText='OK' cancelText='CANCELAR' type="text" placeholder="Informe a Data Do Atendimento "
+      name="DataDoAtendimento" required></ion-datetime>
+
+
+
+
+    <div class="ion-text-center">
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">Salvar</ion-button>
+    </div>
+
+
+  </form>
+
+</ion-content>

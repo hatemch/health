@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="noneData" *ngIf="collectionDomiciliar?.length === 0">
+    <h4 class="light">Nenhum informação para mostrar</h4>
+  </div>
+
+  <div *ngIf="collectionDomiciliar?.length != 0">
+    <ion-list>
+      <!--ion-item (click)="newFichaComplementar('update',item)" *ngFor="let item of collectionDomiciliar">
+        <ion-label>
+          <h3>
+            <strong>Codigo Atendimento Domiciliar: {{ item.codigo }}</strong>
+          </h3>
+          <p><strong>CNS do profissional: </strong> {{ item.cns_do_profissional }}</p>
+          <p><strong>Data: </strong> {{ item.data_ficha_complementar }}</p>
+        </ion-label>
+        <ion-buttons>
+          <ion-button
+                  (click)="delete(item)"
+                  slot="end"
+                  fill="clear"
+                  shape="round">
+            <ion-icon name="trash" color="secondary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item-->
+    </ion-list>
+  </div>
+
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+       <ion-fab-button (click)="doRefresh($event)" data-desc="Sincronizar">
+          <ion-icon name="sync"></ion-icon>
+       </ion-fab-button>
+      <ion-fab-button (click)="newFichaComplementar('add','add')" data-desc="Novo">
+        <ion-icon  name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

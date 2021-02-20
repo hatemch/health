@@ -1,0 +1,54 @@
+ion-header{
+
+    --ion-background-color:#589191;
+    
+}
+
+ion-title{
+    color: rgb(253, 253, 253);
+    
+}
+
+.pes_but{
+    --background:  rgb(111, 169, 187);
+}
+
+.but1 {
+    
+    height: 50px;
+
+   
+    position: relative;
+    left:0%;
+    top: 100px;
+    right: 50%;
+
+    --background:  #7CBBBA;
+    --border-radius: 12px;
+    width: 90%;
+}
+
+.but2 {
+    --background:  #7CBBBA;
+    --border-radius: 12px;
+    width: 90%;
+    height: 50px;
+
+    position: relative;
+    left:0%;
+    top: 250px;
+    right: 50%;
+}
+
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 9%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    display: block;
+
+}

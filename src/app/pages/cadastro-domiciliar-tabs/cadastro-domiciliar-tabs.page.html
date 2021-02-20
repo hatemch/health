@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+      <ion-buttons slot="end" *ngIf="showOptions">
+        <ion-button (click)="goGalleries()">
+          <ion-icon slot="icon-only" ios="ios-images" md="md-images">
+          </ion-icon>
+        </ion-button>
+        <ion-button (click)="goAssinatura()">
+          <ion-icon slot="icon-only"  ios="ios-brush" md="md-brush">
+          </ion-icon>
+        </ion-button>
+      </ion-buttons>
+    <ion-title class="ion-text-wrap">{{ subtitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()">
+      <ion-tab-bar slot="top" >
+        <ion-tab-button tab="cadastro-domiciliar-form" [disabled]="disabledCadastroDomTab1">
+          <ion-icon ios="ios-list" md="md-list">
+          </ion-icon>
+          <ion-label>Formulario</ion-label>
+        </ion-tab-button>
+        <ion-tab-button [hidden]="!showCadastroDomTab" [disabled]="disabledCadastroDomTab2" tab="cadastro-domiciliar-familias" >
+          <ion-icon ios="ios-people" md="md-people"></ion-icon>
+          <ion-label>Familias</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+</ion-content>

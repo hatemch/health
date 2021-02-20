@@ -1,0 +1,103 @@
+<ion-header class="header">
+  <ion-toolbar class="header">
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="goTo()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <form #form="ngForm" method="post">
+    <div *ngFor="let sa of a; let i =index ">
+      <ion-card class="card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-grid>
+              <ion-row>
+                <tr>
+                    <ion-col class="ion-text-center">
+                        <ion-avatar class="ava">
+                          <img src={{sa.photo}}>
+                        </ion-avatar>
+                      </ion-col>
+                      <input #inputcamera type="file" accept="image/*" capture="camera" [hidden]=true />
+                </tr>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                   {{sa.name}} {{sa.last_name}}
+                </ion-col>
+                <ion-col>
+                  <ion-icon name="ios-trash" type="submit" (click)="cancelar(sa.id)" class="trash"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content >
+          <div >
+
+            <ion-grid>
+              <ion-row>
+                <ion-col id="{{sa.code}}">
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>Data de nascimento:</ion-label>
+                    {{sa.birth_date}}
+                  </ion-item>
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>O email:</ion-label>
+                    {{sa.email}}
+                  </ion-item>
+
+                  <ion-item class="roww" lines="none">
+                    <ion-label>RH:</ion-label>
+                    {{sa.rh}}
+                  </ion-item>
+
+
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>Sexo:</ion-label>
+                    {{sa.gender}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>CPF:</ion-label>
+                    {{sa.cpf}}
+                  </ion-item>
+
+                  <ion-item [hidden]="ishidden" class="roww" lines="none">
+                    <ion-label>CNS:</ion-label>
+                    {{sa.cns}}
+                  </ion-item>
+
+                  <div class="expand-arrow-container" (click)="expandFazenda()">
+                    <ion-icon name="ios-arrow-dropdown-circle" *ngIf="ishidden"></ion-icon>
+                    <ion-icon name="ios-arrow-dropup-circle" *ngIf="!ishidden"></ion-icon>
+                  </div>
+
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </form>
+</ion-content>
+
+
+<!--<ion-button type="submit"  (click)="delete(sa.code)"   expand="full" class="at_but">delete</ion-button>-->

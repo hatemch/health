@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light" (click)="openGallery()">
+        <input type="file" #inputGallery accept="image/*" />
+        <ion-icon ios="ios-image" md="md-image"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="openCamera()">
+        <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- #################### Listagem da informação ##################### -->
+  <div>
+    <ion-list>
+      <ion-item *ngFor="let item of Fotos">
+        <ion-img src="{{ item.imageFileBase64}}"></ion-img>
+      </ion-item>
+      <ion-item *ngIf="Fotos?.length === 0">
+        <ion-label class="ion-text-center">
+          Nenhum informação para mostrar
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

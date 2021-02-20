@@ -1,0 +1,32 @@
+ion-header{
+  --ion-background-color:#589191;
+}
+
+ion-title{
+  color: rgb(253, 253, 253);
+  font-size: 18px;
+}
+
+ion-fab-button {
+  --background: #589191;
+}
+ion-tab-button{
+  --color-selected: rgb(253, 253, 253);
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+}
+
+.icono-alert {
+  display: none;
+}
+
+.ion-invalid .icono-alert {
+  display: block;
+  color: var(--ion-color-danger);
+}
+
+.ionic-selectable-has-value .icono-select{
+  display: none;
+}

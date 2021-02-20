@@ -1,0 +1,277 @@
+ion-header {
+    --ion-background-color: #589191;
+  }
+  ion-title {
+    color: rgb(253, 253, 253);
+  }
+  .at_but {
+    --background: #589191;
+    --border-radius: 12px;
+    width: 20%;
+  }
+  .my-component {
+    background: #589191;
+  }
+  .circle {
+    background: #589191;
+    width: 45px;
+    height: 45px;
+    right: 5%;
+    border-radius: 100%;
+    position: absolute;
+  }
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 64%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px;
+    height: 55px;
+    display: block;
+    background: #589191;
+  }
+  .avatar {
+    margin: auto;
+  }
+  ion-input {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    border: 0.55px solid rgba(121, 121, 121, 0.4) !important;
+    border-radius: 5px;
+    --padding-top: 0.7rem;
+    --padding-bottom: 0.7rem;
+    --padding-start: 0.6rem;
+  }
+  .add {
+    width: 3rem;
+    height: 3rem;
+    margin-top: -2rem;
+    margin-left: 80%;
+  }
+  .back {
+    border-radius: 10px;
+  }
+  .radio {
+    padding-left: 0px;
+    margin-right: 5px;
+    margin-left: 0px;
+  }
+  ion-radio-group {
+    ion-item {
+      --padding-start: 0px;
+    }
+  }
+  .selector1 {
+    top: 30px;
+    color: #000002;
+    justify-content: center;
+    border: solid 0.55px rgba(121, 121, 121, 0.4);
+    background-color: #ffffff;
+    border-radius: 5px;
+    --background-checked: #589191;
+    --border-color-checked: #589191;
+  }
+  .selector {
+    color: #000002;
+    justify-content: center;
+    border: solid 0.55px rgba(121, 121, 121, 0.4);
+    background-color: #ffffff;
+    border-radius: 5px;
+    --background-checked: #589191;
+    --border-color-checked: #589191;
+  }
+  .button {
+    --background: Transparent;
+  }
+  .check {
+    --background-checked: #589191;
+    --border-color-checked: #589191;
+    --checkmark-color: #ffffff;
+  }
+  .but1 {
+    height: 40px;
+    position: relative;
+    top: 5px;
+    --background: #589191;
+    --border-radius: 20px;
+    width: 97%;
+  }
+  .search {
+    top: 7px;
+  }
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 33px;
+    display: block;
+    background-color: #589191;
+  }
+  .butalim {
+    --background: #ddc16d;
+    --border-radius: 12px;
+    font-size: 26px;
+  }
+  .butalimdados {
+    top: 250px;
+    margin-top: 60px;
+    --background: #ddc16d;
+    --border-radius: 12px;
+    font-size: 21px;
+  }
+  .selector {
+    color: #000002;
+    justify-content: center;
+    border: solid 0.55px rgba(121, 121, 121, 0.4);
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+  .input {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    border: 0.55px solid rgba(121, 121, 121, 0.4) !important;
+    border-radius: 5px;
+    --padding-top: 0.7rem;
+    --padding-bottom: 0.7rem;
+    --padding-start: 0.6rem;
+    padding: 7%;
+  }
+  ion-input {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+    border: 0.55px solid rgba(121, 121, 121, 0.4) !important;
+    border-radius: 5px;
+    --padding-top: 0.7rem;
+    --padding-bottom: 0.7rem;
+    --padding-start: 0.6rem;
+  }
+  
+  .at_but {
+    --background: #589191;
+    --border-radius: 12px;
+    width: 90%;
+  }
+  .itemm2 {
+    margin-top: 25px;
+    --background: #589191;
+    --border-radius: 12px;
+    font-size: x-large;
+    color: white;
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+
+  .butmed {
+    margin-top: 30px;
+    --background: #ddc16d;
+    --border-radius: 12px;
+    font-size: 18px;
+  }
+  .butapli{
+    margin-top: 30px;
+    --background: #ddc16d;
+    --border-radius: 12px;
+    font-size: 15px;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+  .expand-arrow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ion-icon {
+      font-size:70px;
+    }
+  }
+  
+  
+  .card {
+    background: rgb(251, 251, 251);
+    --border-color: #ddc16d;
+  }
+  .sc-ion-card-md-h {
+   // --background: var(--ion-item-background, transparent);
+   // --color: var(--ion-color-step-550, #f8f6f6);
+    
+    margin-left: 0px;
+    margin-right: 0px;
+    //margin-top: 25px;
+   // margin-bottom: 250px;
+    border-radius: 10px;
+  }
+  ion-card {
+    border-top: 7px solid #ddc16d;
+    border-bottom: 7px solid #ddc16d;
+  }
+  .eye{
+    position: absolute;
+    right: 5%; 
+    font-size: 2em;
+  }
+  
+  .itemmm {
+    margin-top: 25px;
+    --background: #ddc16d;
+    --border-radius: 12px;
+    font-size: large;
+    color: white;
+    width:90%;
+    margin-left: 5%;
+    
+  }
+  .butsituacao1 {
+    margin-top: 30px;
+    --background: #F79279;
+    --border-color: #ddc16d;
+    color: #ffffff;
+    --border-radius: 12px;
+    font-size: 15px;
+  }
+  .butsituacao2 {
+    margin-top: 30px;
+    --background: #F79279;
+    --border-color: #ddc16d;
+    color: #ffffff;
+    --border-radius: 12px;
+    font-size: 18px;
+  }
+  .red {
+    color: red;
+  }
+  .check {
+    --size: 25px;
+    margin-left: 85px;
+  }
+  .checkFora {
+    --size: 25px;
+    margin-left: 20px;
+  }
+  .checkMae {
+    --size: 25px;
+   margin-left: 2px;
+   
+  }
+  .checkPai{
+    --size: 25px;
+   margin-left: 2px;
+  }
+  .checkFrequenta {
+    --size: 25px;
+    margin-left: 115px;
+  }
+  .checkCuidador {
+    --size: 25px;
+    margin-left: 115px;
+  }
+  .image {
+    position: absolute;
+    right: 180%;
+  }
+ 

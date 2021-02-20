@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #form="ngForm" (ngSubmit)="pesquisar(form);" method="post">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="12" size-md="4" size-lg="4" size-xl="4">
+          <ion-list>
+            <ion-label position="floating">Hospitais: <em class="label-opcional">(Opcional)</em></ion-label>
+            <ion-select interface="popover" [(ngModel)]='modelPesquisa.CodigoHospitais' name="Segmento"
+                        placeholder="(Escolha hospital)" cancelText="Desistir" doneText="Confirmar">
+              <ion-select-option value="{{Itens.name}}" *ngFor="let Itens of collectionHospitais">
+                {{Itens.name}}
+              </ion-select-option>
+            </ion-select>
+            <!--ion-select interface="popover" ngModel name="hospitais" placeholder="(Escolha hospital)">
+              <ion-select-option *ngFor="let hospital of collectionHospitais">{{hospital.name}}</ion-select-option>
+            </ion-select-->
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="12" size-md="4" size-lg="4" size-xl="4">
+          <ion-list>
+            <ion-label position="floating">Especialidades: <em class="label-opcional">(Opcional)</em></ion-label>
+            <ion-select interface="popover" [(ngModel)]='modelPesquisa.collectionEspecialidade' name="Segmento"
+                        placeholder="(Escolha especialidade)" cancelText="Desistir" doneText="Confirmar">
+              <ion-select-option value="{{Itens.name}}" *ngFor="let Itens of collectionEspecialidade">
+                {{Itens.name}}
+              </ion-select-option>
+            </ion-select>
+
+            <!--h2>
+              <ion-label position="floating">Especialidades:</ion-label>
+            </h2>
+            <ion-select interface="popover" ngModel name="especialidade" placeholder="(Escolha especialidade)">
+              <ion-select-option *ngFor="let especilidade of collectionEspecialidade">{{especilidade.name}}</ion-select-option>
+            </ion-select-->
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="12" size-md="4" size-lg="4" size-xl="4">
+
+          <ion-item>
+            <ion-label position="floating">Data Inicial </ion-label>
+            <ion-datetime [(ngModel)]='modelPesquisa.DataInicial' name="DataInicial" required
+                          display-format="DD/MM/YYYY" cancelText="Desistir" doneText="Confirmar" placeholder=""
+                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado" value="2019-10-04">
+            </ion-datetime>
+          </ion-item>
+        <!--h2>
+          <ion-label>Data de início</ion-label>
+        </h2>
+        <ion-datetime displayFormat="MM/DD/YYYY" done-text='OK' cancel-text="Cancelar"  placeholder="MM/DD/AAAA" ngModel name="dataInicio" required value="{{ Datai  }}"></ion-datetime-->
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="12" size-md="4" size-lg="4" size-xl="4">
+
+          <ion-item>
+            <ion-label position="floating">Data Final </ion-label>
+            <ion-datetime [(ngModel)]='modelPesquisa.DataFinal' name="DataFinal" required display-format="DD/MM/YYYY"
+                          cancelText="Desistir" doneText="Confirmar" placeholder=""
+                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado" value="2019-10-04">
+            </ion-datetime>
+          </ion-item>
+        <!--h2>
+          <ion-label>Data final</ion-label>
+        </h2>
+        <ion-datetime displayFormat="MM/DD/YYYY" done-text='OK' cancel-text="Cancelar"  placeholder="MM/DD/AAAA" ngModel name="dataFin" required value="{{ Dataf  }}"></ion-datetime-->
+
+        </ion-col>
+      </ion-row>
+      <ion-row style="align-content: center;">
+          <ion-col size-sm="12" size-md="3" size-lg="3" size-xl="3">
+            <ion-button expand="block" color="primary" [disabled]="!form.valid"
+                        (click)="pesquisar(form)">Pesquisar
+            </ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!--div class="ion-text-center">
+      <ion-button type="submit" [disabled]="!form.valid" class="at_but">PESQUISAR</ion-button>
+    </div-->
+
+  </form>
+
+
+</ion-content>

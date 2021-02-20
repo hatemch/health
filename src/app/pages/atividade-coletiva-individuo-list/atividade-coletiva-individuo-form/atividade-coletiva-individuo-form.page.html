@@ -1,0 +1,250 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="goDeletar()">
+        <ion-icon slot="icon-only" name="md-trash"> </ion-icon>
+      </ion-button>
+      <ion-button (click)="goGalleries()">
+        <ion-icon slot="icon-only" ios="ios-images" md="md-images"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ subtitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <mat-expansion-panel [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      <mat-panel-title> CADASTRO INDIVÍDUO </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form #form="ngForm" name="frmBasic">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="1"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">CNS do cidadão* </ion-label>
+              <ion-input
+                type="text"
+                [(ngModel)]="model.cns_cidadao"
+                name="cns_cidadao"
+                required
+                ><ion-icon slot="end" name="search"></ion-icon
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="floating">Data de nascimento*</ion-label>
+              <ion-datetime
+                [(ngModel)]="model.data_nascimento"
+                name="data_nascimento"
+                display-format="DD/MMMM/YYYY"
+                cancelText="Desistir"
+                doneText="Confirmar"
+                required
+                placeholder=""
+                monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                value="2019-10-04"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-label position="stacked">Sexo </ion-label>
+              <ion-select
+                value="{{model.sexo}}"
+                interface="popover"
+                (ionChange)='changeSelect("sexo", $event)'
+                placeholder="Não informado"
+                required
+              >
+                <ion-select-option
+                  *ngFor="let option of collectionSexo"
+                  value="{{option.nome}}"
+                >
+                  {{option.nome}}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col
+            size-sm="8"
+            size-md="6"
+            size-lg="4"
+            offsetSm="2"
+            offsetMd="3"
+            offsetLg="4"
+            class="ion-align-self-center"
+          >
+            <ion-item>
+              <ion-toggle
+                color="primary"
+                slot="end"
+                [(ngModel)]="flagAvaliacao_alterada"
+                (ionChange)='changeCheck("avaliacao_alterada", "flagAvaliacao_alterada")'
+                name="avaliacao_alterada"
+              ></ion-toggle>
+              <ion-label class="ion-text-wrap">Avaliação alterada ?</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Antropometria </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col
+                    size-sm="4"
+                    size-md="3"
+                    size-lg="2"
+                    offsetSm="2"
+                    offsetMd="2"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="floating">Peso (kg)</ion-label>
+                      <ion-input
+                        type="text"
+                        [(ngModel)]="model.antropometria_peso"
+                        name="antropometria_peso"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col
+                    size-sm="4"
+                    size-md="3"
+                    size-lg="2"
+                    offsetSm="2"
+                    offsetMd="2"
+                    offsetLg="0"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-label position="floating">Altura (cm)</ion-label>
+                      <ion-input
+                        type="text"
+                        [(ngModel)]="model.antropometria_altura"
+                        name="antropometria_altura"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title
+                  >Programa nacional de controle do tabagismo</ion-card-title
+                >
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-toggle
+                        color="primary"
+                        slot="end"
+                        [(ngModel)]="flagCessou_habito_fumar"
+                        (ionChange)='changeCheck("tabagismo_cessou_habito_fumar", "flagCessou_habito_fumar")'
+                        name="tabagismo_cessou_habito_fumar"
+                      ></ion-toggle>
+                      <ion-label class="ion-text-wrap"
+                        >Cessou o hábito de fumar ?</ion-label
+                      >
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col
+                    size-sm="8"
+                    size-md="6"
+                    size-lg="4"
+                    offsetSm="2"
+                    offsetMd="3"
+                    offsetLg="4"
+                    class="ion-align-self-center"
+                  >
+                    <ion-item>
+                      <ion-toggle
+                        color="primary"
+                        slot="end"
+                        [(ngModel)]="flagAbandonou_groupo"
+                        (ionChange)='changeCheck("tabagismo_abandonou_grupo", "flagAbandonou_groupo")'
+                        name="tabagismo_abandonou_grupo"
+                      ></ion-toggle>
+                      <ion-label class="ion-text-wrap"
+                        >Abandonou o grupo ?</ion-label
+                      >
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </mat-expansion-panel>
+
+  <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+    <ion-button type="submit" expand="block" (click)="salvar()">
+      Salvar
+    </ion-button>
+    <ion-button type="button" expand="block"> Cancelar </ion-button>
+  </div>
+</ion-content>

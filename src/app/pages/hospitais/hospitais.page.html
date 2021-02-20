@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Hospitais</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="novoHospital()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <form #form="ngForm" method="post">
+    <div *ngFor="let sa of a; let i =index ">
+      <ion-card class="card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-input ngModel type="text" name="nameHospital" value="{{sa.name}}"> {{sa.name}}</ion-input>
+                </ion-col>
+                <ion-col>
+                  <ion-icon name="ios-trash" type="submit" (click)="cancelar(sa.code)" class="trash"></ion-icon>
+                  <ion-icon name="create" (click)="goToo(sa.code,sa.UF)" class="build"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div>
+
+            <ion-grid>
+              <ion-row >
+                <ion-col id="{{sa.code}}">
+
+
+                    <ion-item class="roww" lines="none">
+                      <ion-label>Endereco:</ion-label>
+                      {{sa.address}}
+                    </ion-item>
+                    <ion-item class="roww" lines="none">
+                      <ion-label>UF:</ion-label>
+                      {{sa.UF}}
+                    </ion-item>
+                    <ion-item class="roww" lines="none">
+                      <ion-label>Nome Cidade:</ion-label>
+                      {{sa.city}}
+                    </ion-item>
+
+
+
+                    <ion-item [hidden]="ishidden" class="roww" lines="none">
+                      <ion-label>Telefone:</ion-label>
+                      {{sa.phone}}
+                    </ion-item>
+
+                    <ion-item [hidden]="ishidden" class="roww" lines="none">
+                      <ion-label>O email:</ion-label>
+                      {{sa.email}}
+                    </ion-item>
+
+                    <div class="expand-arrow-container" (click)="expandFazenda()">
+                      <ion-icon name="ios-arrow-dropdown-circle" *ngIf="ishidden"></ion-icon>
+                      <ion-icon name="ios-arrow-dropup-circle" *ngIf="!ishidden"></ion-icon>
+                    </div>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </form>
+</ion-content>
+
+
+<!--<ion-button type="submit"  (click)="delete(sa.code)"   expand="full" class="at_but">delete</ion-button>-->

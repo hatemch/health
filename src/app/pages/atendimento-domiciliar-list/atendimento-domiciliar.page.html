@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{subtitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="noneData" *ngIf="collectionDomiciliar?.length === 0">
+    <h4 class="light">Nenhus informacao para mostrar</h4>
+  </div>
+
+  <div *ngIf="collectionDomiciliar?.length != 0">
+    <ion-list>
+      <ion-item (click)="newAntendimentoDomiciliar('update',item)" *ngFor="let item of collectionDomiciliar">
+        <ion-label>
+          <h3>
+            <strong>Codigo Atendimento Domiciliar: {{ item.codigo }}</strong>
+          </h3>
+          <p><strong>CNS do profissional: </strong> {{ item.cns_do_profissional }}</p>
+          <p><strong>Data Cadastro: </strong> {{ item.data_atendimento_domiciliar }}</p>
+        </ion-label>
+        <ion-buttons>
+          <ion-button
+                  (click)="delete(item)"
+                  slot="end"
+                  fill="clear"
+                  shape="round">
+            <ion-icon name="trash" color="secondary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </div>
+  
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="list"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-grid>
+        <ion-col>
+          <ion-row>
+            <ion-fab-button (click)="newAntendimentoDomiciliar('add','add')">
+              <ion-icon  name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-row>
+          <ion-row>
+            <ion-label>Novo</ion-label>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <ion-fab-button (click)="doRefresh($event)">
+              <ion-icon name="sync"></ion-icon>
+            </ion-fab-button>
+          </ion-row>
+          <ion-row>
+            <ion-label>Sincronizar</ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-grid>   
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

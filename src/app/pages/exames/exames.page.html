@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="primary">
+            <ion-button (click)="goBack()">
+              <ion-icon slot="icon-only" name="ios-undo"></ion-icon>
+            </ion-button>
+      </ion-buttons>
+      <ion-title>Exames</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+  
+    <div class="ion-text-center">
+      <ion-button  size="default" (click)="goToFisico()" class="but1">
+          Físico
+        <ion-icon slot="start" name="ios-body" class="icon"></ion-icon>
+      </ion-button>
+    </div>
+  
+  
+    <div class="ion-text-center">
+        <ion-button  (click)="goToSangue()" class="but2">
+          Sangue
+          <ion-icon slot="start" name="md-flask" class="icon"></ion-icon>
+        </ion-button>
+    </div>
+  
+  
+  </ion-content>
+  

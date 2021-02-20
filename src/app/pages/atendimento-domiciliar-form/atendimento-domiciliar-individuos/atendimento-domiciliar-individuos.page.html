@@ -1,0 +1,392 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Individuos
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <!--CADASTRO INDIVÍDUO-->
+    <mat-expansion-panel  [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong> CADASTRO INDIVÍDUO </strong>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form>
+            <ion-grid>
+                <!-- Turno -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-label>Turno*</ion-label>
+                    </ion-col>
+                    <ion-list>
+                        <ion-radio-group [(ngModel)]="this.turno" (ionChange)='changeSelect("turno", $event)'
+                        >
+                            <ion-row>
+                                <ion-item>
+                                    <ion-label>M</ion-label>
+                                    <ion-radio value="M"></ion-radio>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>T</ion-label>
+                                    <ion-radio value="T"></ion-radio>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>N</ion-label>
+                                    <ion-radio value="N"></ion-radio>
+                                </ion-item>
+                            </ion-row>
+                        </ion-radio-group>
+                    </ion-list>
+                </ion-row>
+                <!-- Numero do prontuario -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Numéro de prontuàrio</ion-label>
+                            <ion-input [(ngModel)]="this.NumProntuario" type="text" name="Numero_prontuàrio" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- CNS do cidadao -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">CNS do cidadão*</ion-label>
+                            <ion-input type="text" name="cns_cidadao" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- Data de nascimento -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="floating">Data de nascimento</ion-label>
+                            <ion-datetime name="data_nascimento"
+                                          display-format="DD/MMMM/YYYY"
+                                          cancelText="Desistir"
+                                          doneText="Confirmar"
+                                          placeholder="Data de nascimento"
+                                          [(ngModel)]="this.Data_de_nascimento"
+                                          monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"
+                                          dayNames="Domingo, Segunda-Feira, Terça-Feira, Quanta-Feira, Quinta-Feira, Sábado"
+                                          value="2019-10-04">
+                            </ion-datetime>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- Sexo -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Sexo</ion-label>
+                            <ion-select [(ngModel)]="this.sexo"
+                                        (ionChange)='changeSelect("sexo", $event)'
+                                        interface="popover"
+                                        placeholder="Não informado"
+                                        required>
+                                <ion-select-option *ngFor="let option of sexo_list" value="{{option}}">
+                                    {{option}}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- Local de atendimento -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Local de atendimento*</ion-label>
+                            <ionic-selectable
+                                    [items]="local_de_atendimento"
+                                    name="local_atendimento"
+                                    itemValueField="id"
+                                    itemTextField="nom"
+                                    [canSearch]="true"
+                                    [isMultiple]="true"
+                                    placeholder="Não informado"
+                                    (onChange)='onChange($event, "local_de_atendimento_Selected")'>
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- Tipo de antendimento* -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Tipo de atendimento*</ion-label>
+                            <ionic-selectable name="tipo_de_atendimento"
+                                              [items]="tipo_de_atendimento"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              [canSearch]="true"
+                                              [isMultiple]="true"
+                                              (onChange)='onChange($event, "tipo_de_atendimento_Selected")'
+                                              placeholder="Não informado">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <!-- Atenção domiciliar -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Atenção domiciliar (modalidade AD)
+                            </ion-label>
+                            <ion-select [(ngModel)]="this.modalidade_AD_selected"
+                                        (ionChange)='changeSelect("modalidade_AD", $event)'
+                                        interface="popover"
+                                        placeholder="Não informado">
+                                <ion-select-option  *ngFor="let option of modalidade_AD" value="{{option.nom}}">
+                                    {{option.nom}}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+
+    <!--CONDIÇAO(OES) AVALIADA(S)-->
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong text-center>CONDIÇAO(OES) AVALIADA(S)</strong>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form>
+            <ion-grid>
+                <!-- CONDIÇAO(OES) AVALIADA(S) -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">CONDIÇAO(OES) AVALIADA(S)</ion-label>
+                            <ionic-selectable name="condicao_avaliada"
+                                              [items]="condicao_avaliada"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              [canSearch]="true"
+                                              [isMultiple]="true"
+                                              (onChange)='onChange($event, "condicao_avaliada_Selected")'
+                                              [items]="condicao_avaliada"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              placeholder="Não informado">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <!-- Numero do prontuario -->
+                <ion-row>
+                    <ion-col size-sm="8"
+                             size-md="6"
+                             size-lg="4"
+                             offsetSm="2"
+                             offsetMd="3"
+                             offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-grid style="box-shadow: 0px 14px 25px gray;border-radius: 5px;">
+                            <ion-col style="border-bottom-color: gray ;border-width: .01em;">
+                                <ion-row>
+                                    <ion-label style="display: flex;justify-content: center; width: 100px;">Outros
+                                    </ion-label>
+                                </ion-row>
+                            </ion-col>
+                            <ion-row>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label position="floating">CID10</ion-label>
+                                        <ion-input type="text"
+                                                   name="cns_cidadao"
+                                                   [(ngModel)]="cid10"
+                                                   required></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-item>
+                                        <ion-label position="floating">CIAP2</ion-label>
+                                        <ion-input type="text"
+                                                   name="cns_cidadao"
+                                                   [(ngModel)]="ciap2"
+                                                   required></ion-input>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+
+    <!--PROCEDIMENTOS-->
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header>
+            <mat-panel-title text-center>
+                <strong text-center>PROCEDIMENTOS</strong>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form>
+            <ion-grid>
+                <!-- PROCEDIMENTOS -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">PROCEDIMENTOS</ion-label>
+                            <ionic-selectable name="procedimento"
+                                              [items]="procedimento"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              [canSearch]="true"
+                                              [isMultiple]="true"
+                                              (onChange)='onChange($event, "procedimento_Selected")'
+                                              placeholder="Não informado"
+                                              required>
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+
+                    </ion-col>
+                </ion-row>
+                <!-- Numero do prontuario -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-grid style="box-shadow: 0px 14px 25px gray;border-radius: 5px;">
+                            <ion-col style="border-bottom-color: gray ;border-width: .01em;">
+                                <ion-row>
+                                    <ion-label style="display: flex;justify-content: center; width: 100px;">Outros
+                                        exames (codigo do SIGTAP)
+                                    </ion-label>
+                                    <ion-buttons>
+                                        <ion-button
+                                                slot="end"
+                                                fill="clear"
+                                                shape="round" (click)="handleButtonClick()">
+                                            <ion-icon name="add" color="secondary"></ion-icon>
+                                        </ion-button>
+                                    </ion-buttons>
+                                </ion-row>
+                            </ion-col>
+                            <ion-row>
+                                <ion-col>
+                                    <div class="noneData" *ngIf="outros?.length === 0">
+                                        <h4 class="light">Lista vazia</h4>
+                                    </div>
+                                    <div *ngIf="outros?.length != 0">
+                                        <ion-list>
+                                            <ion-item *ngFor="let item of outros">
+                                                <ion-label>
+                                                    <strong>{{ item }}</strong>
+                                                </ion-label>
+                                                <ion-buttons>
+                                                    <ion-button
+                                                            (click)="deleteOutro(item)"
+                                                            slot="end"
+                                                            fill="clear"
+                                                            shape="round">
+                                                        <ion-icon name="trash" color="secondary"></ion-icon>
+                                                    </ion-button>
+                                                </ion-buttons>
+                                            </ion-item>
+                                        </ion-list>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+
+    <!--CONDUTA/DESFECHO*-->
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header>
+            <mat-panel-title><strong>CONDUTA/DESFECHO* </strong></mat-panel-title>
+        </mat-expansion-panel-header>
+        <form>
+            <ion-grid>
+                <!-- Conduta/Desfecho -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Conduta/Desfecho</ion-label>
+                            <ionic-selectable name="conduta_desfecho"
+                                              (onChange)='onChange($event, "conduta_desfecho_Selected")'
+                                              [items]="conduta_desfecho"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              [canSearch]="false"
+                                              [isMultiple]="false"
+                                              placeholder="Não informado">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+
+                <!-- Encaminhamento -->
+                <ion-row>
+                    <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4"
+                             class="ion-align-self-center">
+                        <ion-item>
+                            <ion-label position="stacked">Encaminhamento</ion-label>
+                            <ionic-selectable name="encaminhamento"
+                                              [items]="encaminhamento"
+                                              (onChange)='onChange($event, "encaminhamento_Selected")'
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              itemValueField="id"
+                                              itemTextField="nom"
+                                              [canSearch]="false"
+                                              [isMultiple]="false"
+                                              placeholder="Não informado">
+                                <ng-template ionicSelectableCloseButtonTemplate>
+                                    <ion-icon name="close-circle" style="font-size: 24px"></ion-icon>
+                                </ng-template>
+                            </ionic-selectable>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-expansion-panel>
+
+    <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+        <ion-button type="submit" expand="block" (click)="Submit()">
+            Salvar
+        </ion-button>
+        <ion-button type="button" expand="block"> Cancelar</ion-button>
+    </div>
+
+</ion-content>

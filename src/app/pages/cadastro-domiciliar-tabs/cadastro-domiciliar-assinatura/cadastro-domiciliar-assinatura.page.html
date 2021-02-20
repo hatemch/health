@@ -1,0 +1,73 @@
+<ion-content>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" *ngIf="flagForm == false">
+    <ion-fab-button (click)="newAsignatura()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div *ngIf="flagForm" class="ion-padding">
+
+    <form #form="ngForm" (ngSubmit)="salvar();" method="post" name="frmTipoOperacao">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-item>
+              <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-item>
+              <ion-label position='stacked'>Tipo Assinatura </ion-label>
+              <ionic-selectable required
+                                name='tipo_assinatura'
+                                [(ngModel)]="tipo_assinatura"
+                                [items]="collectionTipo"
+                                itemValueField="nome"
+                                itemTextField="nome"
+                                [canSearch]="true"
+                                (onChange)="changeSelect(tipo_assinatura)">
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="8" size-md="6" size-lg="4" offsetSm="2" offsetMd="3" offsetLg="4" align-self-center>
+            <ion-button type="submit" [disabled]="!form.valid" expand="block" color="secondary">
+              Salvar
+            </ion-button>
+            <ion-button type="button"  color="secondary" expand="block"(click)="limpar()">Limpar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+
+  <!-- #################### Listagem da informação ##################### -->
+  <div  *ngIf='flagForm == false'>
+    <ion-list>
+      <ion-item *ngFor="let item of collectionFilter">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="item.foto_url" (click)="mostrarImagen(item)"></ion-img>
+        </ion-thumbnail>
+        <ion-label>{{item.tipo_assinatura }}</ion-label>
+        <ion-buttons>
+          <ion-button (click)="delete(item)" slot="end" fill="clear" shape="round">
+            <ion-icon name="trash" color="secondary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-item *ngIf="collectionFilter?.length === 0">
+        <ion-label class="ion-text-center">
+          Nenhum informação para mostrar
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

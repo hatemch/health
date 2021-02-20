@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="goBack()">
+                <ion-icon slot="icon-only" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{subtitle}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="menu"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button color="light" (click)="sincronizarCadastro()" data-desc="Sincronizar">
+                <ion-icon ios="ios-sync" md="md-sync"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" (click)="newCadastroIndividual()" data-desc="Novo">
+                <ion-icon ios="ios-add" md="md-add"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
+
+    <!-- #################### Listagem da informação ##################### -->
+    <div>
+        <ion-list>
+            <ion-item *ngFor="let item of collection;let i = index">
+                <ion-label>
+                    <h3>
+                        <strong>Codigo Cadastro Individual: {{ item.codigo }}</strong>
+                    </h3>
+                    <p><strong>Cns Profesional:</strong>{{ item.cns_profissional }}</p>
+                    <p><strong>CBO:</strong>{{ item.cbo }}</p>
+                    <p><strong>CNES:</strong>{{ item.cnes }}</p>
+                    <p><strong>Data:</strong>{{ item.data_cadastro }}</p>
+                </ion-label>
+                <ion-buttons>
+                    <ion-button (click)="delete(item.codigo.toString())" slot="end" fill="clear" shape="round"
+                                [disabled]="permissoes.Deletar == 0">
+                        <ion-icon name="trash" color="secondary"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="editarCadastroIndividual(item.codigo)" slot="end" fill="clear" shape="round"
+                                [disabled]="permissoes.Editar == 0">
+                        <ion-icon name="create" ios="ios-create" md="md-create"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <ion-item *ngIf="collection?.length === 0">
+                <ion-label class="ion-text-center">
+                    Nenhum informação para mostrar
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>
